@@ -28,7 +28,7 @@ public class Main extends Canvas implements KeyListener {
         JFrame frame = new JFrame("mah pona");
         frame.add(this);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        frame.getContentPane().setBackground(Color.CYAN);
+        frame.getContentPane().setBackground(Color.DARK_GRAY);
         frame.setVisible(true);
         frame.setResizable(false);
         frame.addWindowListener(
@@ -41,7 +41,7 @@ public class Main extends Canvas implements KeyListener {
 
     public void paint(Graphics g) {
         if (notebookOpen == true) {
-            g.setColor(Color.MAGENTA);
+            g.setColor(new Color(207, 187, 118));
             g.fillRect(SCREEN_WIDTH / 2 - SCREEN_WIDTH / 20, SCREEN_HEIGHT / 2 - SCREEN_HEIGHT / 20, SCREEN_WIDTH / 10,
                     SCREEN_HEIGHT / 10);
         }
