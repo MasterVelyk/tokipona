@@ -25,7 +25,7 @@ public class Main extends Canvas implements KeyListener {
     }
 
     public Main() {
-        JFrame frame = new JFrame("mah pona");
+        JFrame frame = new JFrame("ma pona");
         frame.add(this);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         frame.getContentPane().setBackground(Color.DARK_GRAY);
@@ -48,8 +48,7 @@ public class Main extends Canvas implements KeyListener {
     }
 
     public static void main(String[] args) throws Exception {
-        new Main();
         System.out.println("fuck")
-        
+        new Main();
     }
 }
