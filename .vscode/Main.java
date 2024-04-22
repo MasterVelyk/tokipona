@@ -1,8 +1,3 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferStrategy;
-import javax.swing.*;
-import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends Canvas implements KeyListener {
