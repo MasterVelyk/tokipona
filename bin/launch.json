@@ -9,20 +9,7 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "tokipona_ce42e7e2"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "App",
-            "request": "launch",
-            "mainClass": "App",
-            "projectName": "tokipona_ce42e7e2"
+            "projectName": "tokipona_89f0506d"
         }
     ]
 }
