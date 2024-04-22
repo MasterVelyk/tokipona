@@ -1,3 +1,8 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferStrategy;
+import javax.swing.*;
+import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends Canvas implements KeyListener {
@@ -43,7 +48,7 @@ public class Main extends Canvas implements KeyListener {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("fuck")
+        System.out.println("fuck");
         new Main();
     }
 }

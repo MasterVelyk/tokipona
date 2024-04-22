@@ -3,8 +3,8 @@ import java.util.*;
 public class NotebookPage {
     // private String imageLink;
     private String sentenceContext; // context for the situation in the notebook
-    private Sentence answer; //answer for the page
-    private Sentence guess; //player's guess for the page
+    private Sentence answer; // answer for the page
+    private Sentence guess; // player's guess for the page
 
     public NotebookPage(Sentence ans, String context) {
         answer = ans;
@@ -33,7 +33,6 @@ public class NotebookPage {
     public Sentence writeGuess() {
         Scanner input = new Scanner(System.in);
         System.out.println("Input a word.");
-        
 
         return null;
     }
