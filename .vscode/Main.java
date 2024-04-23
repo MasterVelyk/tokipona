@@ -9,6 +9,7 @@ public class Main extends Canvas implements KeyListener, Runnable {
     private static int SCREEN_WIDTH = 1000;
     private static final int SCREEN_HEIGHT = 750;
     private static boolean notebookOpen = false;
+    private int rectX = 0;
 
     Thread gameThread;
 
@@ -44,10 +45,13 @@ public class Main extends Canvas implements KeyListener, Runnable {
 
     public void paint(Graphics g) {
         super.paint(g);
+
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(Color.CYAN);
+        g2.fillRect(rectX, 10, 30, 30);
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("fuck");
         new Main();
     }
     
@@ -64,6 +68,6 @@ public class Main extends Canvas implements KeyListener, Runnable {
     }
 
     public void update() {
-
+        rectX+=1;
     }
 }
