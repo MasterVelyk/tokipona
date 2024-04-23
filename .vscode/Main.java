@@ -5,10 +5,13 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
-public class Main extends Canvas implements KeyListener {
+public class Main extends Canvas implements KeyListener, Runnable {
     private static int SCREEN_WIDTH = 1000;
     private static final int SCREEN_HEIGHT = 750;
     private static boolean notebookOpen = false;
+    private int rectX = 0;
+
+    Thread gameThread;
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_X) {
@@ -25,6 +28,7 @@ public class Main extends Canvas implements KeyListener {
     }
 
     public Main() {
+        startGameThread();
         JFrame frame = new JFrame("ma pona");
         frame.add(this);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -40,15 +44,30 @@ public class Main extends Canvas implements KeyListener {
     }
 
     public void paint(Graphics g) {
-        if (notebookOpen == true) {
-            g.setColor(new Color(207, 187, 118));
-            g.fillRect(SCREEN_WIDTH / 2 - SCREEN_WIDTH / 20, SCREEN_HEIGHT / 2 - SCREEN_HEIGHT / 20, SCREEN_WIDTH / 10,
-                    SCREEN_HEIGHT / 10);
-        }
+        super.paint(g);
+
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(Color.CYAN);
+        g2.fillRect(rectX, 10, 30, 30);
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("fuck");
         new Main();
+    }
+    
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    public void run() {
+        while (gameThread != null) {
+            update();
+            repaint();
+        }
+    }
+
+    public void update() {
+        rectX+=1;
     }
 }
