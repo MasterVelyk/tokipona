@@ -31,7 +31,7 @@ public class NotebookPage {
     }
 
     public Sentence writeGuess() {
-        Scanner input = new Scanner(System.in);
+        //Scanner input = new Scanner(System.in);
         System.out.println("Input a word.");
 
         return null;
