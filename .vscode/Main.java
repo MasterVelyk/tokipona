@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends Canvas implements Runnable {
-   private static final int SCREEN_WIDTH = 1000;
-   private static final int SCREEN_HEIGHT = 1000;
+   private static final int SCREEN_WIDTH = 400;
+   private static final int SCREEN_HEIGHT = 400;
    private static boolean notebookOpen = false;
    private int playerX = 100;
    private int playerY = 100;
@@ -108,7 +108,7 @@ public class Main extends Canvas implements Runnable {
       }
       if (keyHandler.downPressed == true) {
          playerY += playerSpeed;
-         if (playerY + 40 <= SCREEN_HEIGHT) {
+         if (playerY + 40 >= SCREEN_HEIGHT) {
             playerY = SCREEN_HEIGHT - 40;
          }
       }
@@ -120,7 +120,7 @@ public class Main extends Canvas implements Runnable {
       }
       if (keyHandler.rightPressed == true) {
          playerX += playerSpeed;
-         if (playerX + 40 <= SCREEN_WIDTH) {
+         if (playerX + 40 >= SCREEN_WIDTH) {
             playerX = SCREEN_WIDTH - 40;
          }
       }

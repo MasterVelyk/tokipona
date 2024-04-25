@@ -1,10 +1,10 @@
 import java.awt.event.*;
 
 public class KeyHandler implements KeyListener {
-    public boolean upPressed = false;
-    public boolean downPressed = false;
-    public boolean rightPressed = false;
-    public boolean leftPressed = false;
+    protected boolean upPressed = false;
+    protected boolean downPressed = false;
+    protected boolean rightPressed = false;
+    protected boolean leftPressed = false;
 
     public void keyTyped(KeyEvent e) {
         // TODO make it work
@@ -12,6 +12,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
+        try {
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = true;
         }
@@ -23,6 +24,7 @@ public class KeyHandler implements KeyListener {
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
             rightPressed = true;
+        }
         }
     }
 
