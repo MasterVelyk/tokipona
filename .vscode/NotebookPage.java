@@ -14,6 +14,7 @@ public class NotebookPage {
         try {
             img = ImageIO.read(new File("strawberry.jpg"));
         } catch (IOException e) {
+            System.out.println("No strawburry :(");
         }
 
         answer = ans;
@@ -23,7 +24,8 @@ public class NotebookPage {
     public NotebookPage() {
         try {
             img = ImageIO.read(new File("strawberry.jpg"));
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
     }
 
     public BufferedImage getImage() {

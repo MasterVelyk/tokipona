@@ -7,7 +7,8 @@ public class Notebook {
         pageList.add(new NotebookPage());
     }
 
-    public NotebookPage getPage(int page) {
-        return pageList.get(page);
+    // B is the page number. Remember.
+    public NotebookPage getPage(int B) {
+        return pageList.get(B);
     }
 }
