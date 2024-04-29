@@ -53,6 +53,7 @@ public class Main extends Canvas implements Runnable {
       frame.setVisible(true);
       frame.setResizable(false);
       frame.addKeyListener(keyHandler);
+
       frame.setFocusable(true);
       frame.addWindowListener(
             new WindowAdapter() {
