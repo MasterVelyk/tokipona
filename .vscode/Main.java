@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends Canvas implements Runnable {
-   private static final int SCREEN_WIDTH = 400;
-   private static final int SCREEN_HEIGHT = 400;
+   private static final int SCREEN_WIDTH = 800;
+   private static final int SCREEN_HEIGHT = 800;
    private static boolean notebookOpen = false;
    private int playerX = 100;
    private int playerY = 100;
