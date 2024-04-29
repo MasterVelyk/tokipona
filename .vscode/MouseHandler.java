@@ -3,9 +3,15 @@ import java.awt.event.MouseListener;
 
 public class MouseHandler implements MouseListener {
 
+    protected boolean notebookOpen = false;
+
     public void mouseClicked(MouseEvent e) {
-        int x=e.getX();
-        int y=e.getY();
+        int x = e.getX();
+        int y = e.getY();
+
+        if ((x <= 100) && (y <= 100)) {
+            notebookOpen = !(notebookOpen);
+        }
     }
 
     public void mousePressed(MouseEvent e) {

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class Main extends Canvas implements Runnable {
    private static final int SCREEN_WIDTH = 520;
    private static final int SCREEN_HEIGHT = 720;
-   private static boolean notebookOpen = false;
    private int playerX = 100;
    private int playerY = 100;
    private int playerSpeed = 10;
+   private Notebook myNotebook = new Notebook();
 
    Thread gameThread;
    KeyHandler keyHandler = new KeyHandler();
@@ -41,7 +41,13 @@ public class Main extends Canvas implements Runnable {
 
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(Color.CYAN);
-      g2.drawOval(playerX, playerY, 40, 40);
+      g2.fillOval(playerX, playerY, 40, 40);
+      g2.fillRect(10, 10, 80, 80);
+
+      if (mouseHandler.notebookOpen == true) {
+         g2.drawRect(100, 100, 100, 100);
+         g2.drawImage(myNotebook.getPage(0).getImage(), null, 100, 100);
+      }
    }
 
    public static void main(String[] args) throws Exception {
@@ -74,28 +80,30 @@ public class Main extends Canvas implements Runnable {
    }
 
    public void update() {
-      if (keyHandler.upPressed == true) {
-         playerY -= playerSpeed;
-         if (playerY <= 100) {
-            playerY = 100;
+      if (mouseHandler.notebookOpen == false) {
+         if (keyHandler.upPressed == true) {
+            playerY -= playerSpeed;
+            if (playerY <= 100) {
+               playerY = 100;
+            }
          }
-      }
-      if (keyHandler.downPressed == true) {
-         playerY += playerSpeed;
-         if (playerY + 80 >= SCREEN_HEIGHT) {
-            playerY = SCREEN_HEIGHT - 80;
+         if (keyHandler.downPressed == true) {
+            playerY += playerSpeed;
+            if (playerY + 80 >= SCREEN_HEIGHT) {
+               playerY = SCREEN_HEIGHT - 80;
+            }
          }
-      }
-      if (keyHandler.leftPressed == true) {
-         playerX -= playerSpeed;
-         if (playerX <= 0) {
-            playerX = 0;
+         if (keyHandler.leftPressed == true) {
+            playerX -= playerSpeed;
+            if (playerX <= 0) {
+               playerX = 0;
+            }
          }
-      }
-      if (keyHandler.rightPressed == true) {
-         playerX += playerSpeed;
-         if (playerX + 60 >= SCREEN_WIDTH) {
-            playerX = SCREEN_WIDTH - 60;
+         if (keyHandler.rightPressed == true) {
+            playerX += playerSpeed;
+            if (playerX + 60 >= SCREEN_WIDTH) {
+               playerX = SCREEN_WIDTH - 60;
+            }
          }
       }
    }

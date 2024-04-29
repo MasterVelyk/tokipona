@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 
 public class Notebook {
-    private ArrayList<NotebookPage> pageList = new ArrayList<NotebookPage>();
+    protected ArrayList<NotebookPage> pageList = new ArrayList<NotebookPage>();
 
-    public static void main(String[] args) {
-        System.out.println("testy test");
+    public Notebook() {
+        pageList.add(new NotebookPage());
     }
 
-    public boolean displayPage(int page) {
-        System.out.println(pageList.get(0));
-        return false;
+    public NotebookPage getPage(int page) {
+        return pageList.get(page);
     }
 }
