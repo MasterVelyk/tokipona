@@ -12,7 +12,6 @@ public class KeyHandler implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        try {
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = true;
         }
@@ -24,7 +23,6 @@ public class KeyHandler implements KeyListener {
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
             rightPressed = true;
-        }
         }
     }
 
