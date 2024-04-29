@@ -4,13 +4,13 @@ public class Word {
     private boolean known = false;
     private boolean seen = false;
 
-    public Word (String tokiPonaWord) {
+    public Word(String tokiPonaWord) {
         toki = tokiPonaWord;
     }
 
     public void setEnglish(String g) {
         english = g;
-     }
+    }
 
     public String getToki() {
         return toki;
