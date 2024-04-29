@@ -6,11 +6,6 @@ public class KeyHandler implements KeyListener {
     protected boolean rightPressed = false;
     protected boolean leftPressed = false;
 
-    public void keyTyped(KeyEvent e) {
-        // TODO make it work
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
-    }
-
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = true;
@@ -39,6 +34,10 @@ public class KeyHandler implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
             rightPressed = false;
         }
+    }
+
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
     }
 
 }

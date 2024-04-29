@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends Canvas implements Runnable {
-   private static final int SCREEN_WIDTH = 800;
-   private static final int SCREEN_HEIGHT = 800;
+   private static final int SCREEN_WIDTH = 520;
+   private static final int SCREEN_HEIGHT = 720;
    private static boolean notebookOpen = false;
    private int playerX = 100;
    private int playerY = 100;
@@ -15,34 +15,7 @@ public class Main extends Canvas implements Runnable {
 
    Thread gameThread;
    KeyHandler keyHandler = new KeyHandler();
-
-   public void mousePressed(MouseEvent e) {
-
-   }
-
-   public void mouseReleased(MouseEvent e) {
-
-   }
-
-   public void mouseExited(MouseEvent e) {
-
-   }
-
-   public void mouseEntered(MouseEvent e) {
-
-   }
-
-   public void mouseClicked(MouseEvent e) {
-
-   }
-
-   public void mouseDragged(MouseEvent e) {
-
-   }
-
-   public void mouseMoved(MouseEvent e) {
-
-   }
+   MouseHandler mouseHandler = new MouseHandler();
 
    public Main() {
       startGameThread();
@@ -52,8 +25,8 @@ public class Main extends Canvas implements Runnable {
       frame.getContentPane().setBackground(Color.DARK_GRAY);
       frame.setVisible(true);
       frame.setResizable(false);
-      frame.addKeyListener(keyHandler);
-
+      super.addKeyListener(keyHandler);
+      super.addMouseListener(mouseHandler);
       frame.setFocusable(true);
       frame.addWindowListener(
             new WindowAdapter() {
@@ -103,14 +76,14 @@ public class Main extends Canvas implements Runnable {
    public void update() {
       if (keyHandler.upPressed == true) {
          playerY -= playerSpeed;
-         if (playerY <= 0) {
-            playerY = 0;
+         if (playerY <= 100) {
+            playerY = 100;
          }
       }
       if (keyHandler.downPressed == true) {
          playerY += playerSpeed;
-         if (playerY + 40 >= SCREEN_HEIGHT) {
-            playerY = SCREEN_HEIGHT - 40;
+         if (playerY + 80 >= SCREEN_HEIGHT) {
+            playerY = SCREEN_HEIGHT - 80;
          }
       }
       if (keyHandler.leftPressed == true) {
@@ -121,8 +94,8 @@ public class Main extends Canvas implements Runnable {
       }
       if (keyHandler.rightPressed == true) {
          playerX += playerSpeed;
-         if (playerX + 40 >= SCREEN_WIDTH) {
-            playerX = SCREEN_WIDTH - 40;
+         if (playerX + 60 >= SCREEN_WIDTH) {
+            playerX = SCREEN_WIDTH - 60;
          }
       }
    }

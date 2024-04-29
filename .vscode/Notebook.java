@@ -7,7 +7,8 @@ public class Notebook {
         System.out.println("testy test");
     }
 
-    public boolean displayPage() {
+    public boolean displayPage(int page) {
+        System.out.println(pageList.get(0));
         return false;
     }
 }
