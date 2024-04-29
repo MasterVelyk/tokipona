@@ -13,6 +13,7 @@ public class NotebookPage {
     public NotebookPage(Sentence ans, String context) {
         try {
             img = ImageIO.read(new File("strawberry.jpg"));
+            System.out.println("Strawburry :D");
         } catch (IOException e) {
             System.out.println("No strawburry :(");
         }

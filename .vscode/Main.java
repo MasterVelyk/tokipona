@@ -46,7 +46,7 @@ public class Main extends Canvas implements Runnable {
 
       if (mouseHandler.notebookOpen == true) {
          g2.drawRect(100, 100, 100, 100);
-         g2.drawImage(myNotebook.getPage(0).getImage(), null, 100, 100);
+         g2.drawImage(myNotebook.getPage(0).getImage(), 100, 100, null);
       }
    }
 
