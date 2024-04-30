@@ -135,4 +135,12 @@ public class Masterlist {
         new Word("weka"),
         new Word("wile")
     };
+    
+    protected Word[] workinglist = {
+         new Word("soweli")
+    };
+    
+    public Masterlist() {
+      workinglist[0].seeWord();
+    }
 }
