@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -27,6 +28,9 @@ public class NotebookPage {
             img = ImageIO.read(new File("strawberry.jpg"));
         } catch (IOException e) {
         }
+        ArrayList<Word> answerArray = new ArrayList<Word>();
+        answerArray.add(Masterlist.workinglist[0]); 
+        answer = new Sentence(answerArray);
     }
 
     public BufferedImage getImage() {
