@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class Main extends Canvas implements Runnable {
    private static final int SCREEN_WIDTH = 520;
-   private static final int SCREEN_HEIGHT = 720;
+   private static final int SCREEN_HEIGHT = 620;
    private int playerX = 100;
    private int playerY = 100;
    private int playerSpeed = 10;
@@ -45,9 +45,11 @@ public class Main extends Canvas implements Runnable {
       g2.fillRect(10, 10, 80, 80);
 
       if (mouseHandler.notebookOpen == true) {
-         g2.drawRect(100, 100, 100, 100);
-         g2.drawImage(myNotebook.getPage(0).getImage(), 100, 100, null);
+         g2.drawRect(20, 120, 460, 440);
+         g2.drawRect(20, 340, 460, 60);
+         g2.drawImage(myNotebook.getPage(0).getImage(), 30, 130, 440, 200, null);
       }
+      
    }
 
    public static void main(String[] args) throws Exception {
