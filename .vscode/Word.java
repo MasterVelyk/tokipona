@@ -1,11 +1,22 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class Word {
+    protected BufferedImage sitelen = null;
     private String toki;
     private String english;
     private boolean known = false;
     private boolean seen = false;
 
     public Word(String tokiPonaWord) {
-        toki = tokiPonaWord;
+      toki = tokiPonaWord;
+      try {
+            sitelen = ImageIO.read(new File(tokiPonaWord+".jpg"));
+        } catch (IOException e) {
+        }
     }
 
     public void setEnglish(String g) {

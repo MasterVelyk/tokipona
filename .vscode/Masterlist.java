@@ -1,5 +1,5 @@
 public class Masterlist {
-    protected Word[] masterlist = {
+    protected static Word[] masterlist = {
         new Word("a"),
         new Word("akesi"),
         new Word("ala"),
@@ -135,4 +135,12 @@ public class Masterlist {
         new Word("weka"),
         new Word("wile")
     };
+    
+    protected static Word[] workinglist = {
+         new Word("soweli")
+    };
+    
+    public Masterlist() {
+      workinglist[0].seeWord();
+    }
 }
