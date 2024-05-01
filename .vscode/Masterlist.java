@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Masterlist {
   // words accessable via binary search
-  protected Word[] masterlist = {
+  protected static Word[] masterlist = {
       new Word("a"),
       new Word("akesi"),
       new Word("ala"),
@@ -146,12 +146,7 @@ public class Masterlist {
   }
 
   public int findWord(String word) {
-    for (int i = 0; i < masterlist.length; i++); {
-      if (masterlist[i].equals(word)) {
-        return i;
-      }
-      return -1;
-    }
+      return 0;
   }
 
   public void seeWord(int wordNum) {

@@ -24,7 +24,7 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(new File(".vscode/images/strawberry.jpg"));
+            img = ImageIO.read(getClass().getResource("/images/strawberry"+".jpg"));
         } catch (IOException e) {
             System.out.println(e);
         }

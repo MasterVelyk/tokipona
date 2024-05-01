@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
 
@@ -16,7 +20,6 @@ public class Main extends Canvas implements Runnable {
 
    Thread gameThread;
    KeyHandler keyHandler = new KeyHandler();
-   MouseHandler mouseHandler = new MouseHandler();
 
    public Main() {
       startGameThread();
@@ -27,7 +30,8 @@ public class Main extends Canvas implements Runnable {
       frame.setVisible(true);
       frame.setResizable(false);
       super.addKeyListener(keyHandler);
-      super.addMouseListener(mouseHandler);
+      super.addMouseListener(keyHandler);
+      super.addMouseMotionListener(keyHandler);
       frame.setFocusable(true);
       frame.addWindowListener(
             new WindowAdapter() {
@@ -41,11 +45,15 @@ public class Main extends Canvas implements Runnable {
       super.paint(g);
 
       Graphics2D g2 = (Graphics2D) g;
-      g2.setColor(Color.CYAN);
+      g2.setColor(Color.WHITE);
       g2.fillOval(playerX, playerY, 40, 40);
       g2.fillRect(10, 10, 80, 80);
 
-      if (mouseHandler.notebookOpen == true) {
+      if (keyHandler.notebookOpen == true) {
+         g2.setColor(Color.PINK);
+         g2.fillRect(20, 120, 460, 440);
+         g2.fillRect(20, 340, 460, 60);
+         g2.setColor(Color.WHITE);
          g2.drawRect(20, 120, 460, 440);
          g2.drawRect(20, 340, 460, 60);
          g2.drawImage(myNotebook.getPage(0).getImage(), 30, 130, 440, 200, null);
@@ -70,17 +78,16 @@ public class Main extends Canvas implements Runnable {
          }
          // draws a lil node for each word that is seen
          for (int i = 0; i < myMasterlist.seenlist.size(); i++) {
-            if (i == mouseHandler.grabbedWord) {
-               g2.drawOval(mouseHandler.mouseX, mouseHandler.mouseY, 60, 60);
-               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, mouseHandler.mouseX, mouseHandler.mouseY, 60, 60,
+            if (i == keyHandler.grabbedWord) {
+               g2.fillOval(keyHandler.mouseX-25, keyHandler.mouseY-25, 50, 50);
+               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, keyHandler.mouseX-25, keyHandler.mouseY-25, 50, 50,
                      null);
             } else {
-               g2.drawOval(20 + 60 * i, 405, 60, 60);
-               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 20 + 60 * i, 405, 60, 60, null);
+               g2.fillOval(25 + 60 * i, 405, 50, 50);
+               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 25 + 60 * i, 405, 50, 50, null);
             }
          }
       }
-
    }
 
    public static void main(String[] args) throws Exception {
@@ -96,7 +103,7 @@ public class Main extends Canvas implements Runnable {
       while (gameThread != null) {
          double drawInterval = 1000000000 / 24;
          double nextDrawInterval = System.nanoTime() + drawInterval;
-
+         
          update();
          repaint();
 
@@ -113,7 +120,7 @@ public class Main extends Canvas implements Runnable {
    }
 
    public void update() {
-      if (mouseHandler.notebookOpen == false) {
+      if (keyHandler.notebookOpen == false) {
          if (keyHandler.upPressed == true) {
             playerY -= playerSpeed;
             if (playerY <= 100) {

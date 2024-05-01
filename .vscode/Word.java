@@ -13,9 +13,9 @@ public class Word {
     public Word(String tokiPonaWord) {
         toki = tokiPonaWord;
         try {
-            sitelen = ImageIO.read(new File(".vscode/images/" + tokiPonaWord + ".jpg"));
+         sitelen = ImageIO.read(getClass().getResource("/images/soweli"+".jpg"));
         } catch (IOException e) {
-            System.out.println(".vscode/images/" + tokiPonaWord + ".jpg");
+            System.out.println("/images/" + tokiPonaWord + ".jpg");
         }
     }
 
