@@ -17,6 +17,7 @@ public class NotebookPage {
             System.out.println("Strawburry :D");
         } catch (IOException e) {
             System.out.println("No strawburry :(");
+            System.out.println(e);
         }
 
         answer = ans;
@@ -27,6 +28,7 @@ public class NotebookPage {
         try {
             img = ImageIO.read(new File("strawberry.jpg"));
         } catch (IOException e) {
+            System.out.println(e);
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
         answerArray.add(Masterlist.workinglist[0]); 
