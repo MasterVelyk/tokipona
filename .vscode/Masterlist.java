@@ -146,7 +146,12 @@ public class Masterlist {
   }
 
   public int findWord(String word) {
-
+    for (int i = 0; i < masterlist.length; i++); {
+      if (masterlist[i].equals(word)) {
+        return i;
+      }
+      return -1;
+    }
   }
 
   public void seeWord(int wordNum) {
