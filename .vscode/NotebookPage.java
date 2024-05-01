@@ -29,7 +29,7 @@ public class NotebookPage {
             System.out.println(e);
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
-        answerArray.add(Masterlist.workinglist[0]);
+        answerArray.add(new Word("soweli"));
         answer = new Sentence(answerArray);
     }
 

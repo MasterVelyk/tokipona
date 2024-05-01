@@ -12,6 +12,7 @@ public class Main extends Canvas implements Runnable {
    private int playerY = 100;
    private int playerSpeed = 10;
    private Notebook myNotebook = new Notebook();
+   protected Masterlist myMasterlist = new Masterlist();
 
    Thread gameThread;
    KeyHandler keyHandler = new KeyHandler();
@@ -48,7 +49,7 @@ public class Main extends Canvas implements Runnable {
          g2.drawRect(20, 120, 460, 440);
          g2.drawRect(20, 340, 460, 60);
          g2.drawImage(myNotebook.getPage(0).getImage(), 30, 130, 440, 200, null);
-         // draws a circle for eachword in the 
+         // draws a circle for each word in the answer
          for (int i = 0; i < myNotebook.getPage(0).getAnswer().getSentence().size(); i++) {
             if (myNotebook.getPage(0).getAnswer().getSentence().size() % 2 == 0) {
                if (i % 2 == 0) {
@@ -65,6 +66,17 @@ public class Main extends Canvas implements Runnable {
                if (i % 2 == 1) {
                   g2.drawOval(225 - (((i + 1) / 2) * 60), 345, 50, 50);
                }
+            }
+         }
+         // draws a lil node for each word that is seen
+         for (int i = 0; i < myMasterlist.seenlist.size(); i++) {
+            if (i == mouseHandler.grabbedWord) {
+               g2.drawOval(mouseHandler.mouseX, mouseHandler.mouseY, 60, 60);
+               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, mouseHandler.mouseX, mouseHandler.mouseY, 60, 60,
+                     null);
+            } else {
+               g2.drawOval(20 + 60 * i, 405, 60, 60);
+               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 20 + 60 * i, 405, 60, 60, null);
             }
          }
       }

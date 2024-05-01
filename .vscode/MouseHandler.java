@@ -1,9 +1,12 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class MouseHandler implements MouseListener {
+public class MouseHandler implements MouseListener, MouseMotionListener {
 
     protected boolean notebookOpen = false;
+    protected int grabbedWord = -1;
+    protected int mouseX, mouseY;
 
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
@@ -38,4 +41,13 @@ public class MouseHandler implements MouseListener {
         // 'mouseExited'");
     }
 
+    public void mouseDragged(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
 }

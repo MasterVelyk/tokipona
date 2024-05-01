@@ -9,13 +9,13 @@ public class Word {
     private String toki;
     private String english;
     private boolean known = false;
-    private boolean seen = false;
 
     public Word(String tokiPonaWord) {
-      toki = tokiPonaWord;
-      try {
-            sitelen = ImageIO.read(new File(tokiPonaWord+".jpg"));
+        toki = tokiPonaWord;
+        try {
+            sitelen = ImageIO.read(new File(".vscode/images/" + tokiPonaWord + ".jpg"));
         } catch (IOException e) {
+            System.out.println(".vscode/images/" + tokiPonaWord + ".jpg");
         }
     }
 
@@ -31,14 +31,6 @@ public class Word {
         return english;
     }
 
-    public boolean seeWord() {
-        if (seen == true) {
-            return false;
-        }
-        seen = true;
-        return true;
-    }
-
     // returns true if the user is learning the word for the first time
     // returns false if the user already knew it
     public boolean learnWord() {
@@ -47,5 +39,9 @@ public class Word {
         }
         known = true;
         return true;
+    }
+
+    public int compareTo(Word a) {
+        return this.getToki().compareTo(a.getToki());
     }
 }
