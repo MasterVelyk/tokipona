@@ -48,6 +48,7 @@ public class Main extends Canvas implements Runnable {
          g2.drawRect(20, 120, 460, 440);
          g2.drawRect(20, 340, 460, 60);
          g2.drawImage(myNotebook.getPage(0).getImage(), 30, 130, 440, 200, null);
+         // draws a circle for each 
          for (int i=0; i < myNotebook.getPage(0).getAnswer().getSentence().size(); i++) {
             if (myNotebook.getPage(0).getAnswer().getSentence().size()%2 == 0) {
                if (i%2 == 0) {

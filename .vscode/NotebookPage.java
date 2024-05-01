@@ -13,10 +13,9 @@ public class NotebookPage {
 
     public NotebookPage(Sentence ans, String context) {
         try {
-            img = ImageIO.read(new File("strawberry.jpg"));
-            System.out.println("Strawburry :D");
+            img = ImageIO.read(new File(".vscode/images/strawberry.jpg"));
         } catch (IOException e) {
-            System.out.println("No strawburry :(");
+            System.out.println(e);
         }
 
         answer = ans;
@@ -25,11 +24,12 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(new File("strawberry.jpg"));
+            img = ImageIO.read(new File(".vscode/images/strawberry.jpg"));
         } catch (IOException e) {
+            System.out.println(e);
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
-        answerArray.add(Masterlist.workinglist[0]); 
+        answerArray.add(Masterlist.workinglist[0]);
         answer = new Sentence(answerArray);
     }
 
