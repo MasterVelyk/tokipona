@@ -119,7 +119,7 @@ public class Main extends Canvas implements Runnable {
       }
    }
 
-   public void update() {
+   public void update() { // Handles player movement
       if (keyHandler.notebookOpen == false) {
          if (keyHandler.upPressed == true) {
             playerY -= playerSpeed;

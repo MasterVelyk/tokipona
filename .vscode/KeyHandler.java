@@ -9,7 +9,7 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     protected int grabbedWord = -1;
     protected int mouseX, mouseY;
 
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) { // Sends keys being pressed to Main
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = true;
         }
@@ -22,11 +22,9 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
             rightPressed = true;
         }
-        System.out.println("up = "+upPressed);
-
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) { // Sends keys being pressed to Main
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = false;
         }
