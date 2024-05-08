@@ -119,35 +119,34 @@ public class Main extends JPanel implements Runnable {
       }
    }
 
-
    public void update() { // Handles user movement
       if (mouseHandler.notebookOpen == false) {
-      if (keyHandler.notebookOpen == false) {
-         if (keyHandler.upPressed == true) {
-            playerY -= playerSpeed;
-            if (playerY <= 100) {
-               playerY = 100;
+         if (keyHandler.notebookOpen == false) {
+            if (keyHandler.upPressed == true) {
+               playerY -= playerSpeed;
+               if (playerY <= 100) {
+                  playerY = 100;
+               }
             }
-         }
-         if (keyHandler.downPressed == true) {
-            playerY += playerSpeed;
-            if (playerY + 80 >= SCREEN_HEIGHT) {
-               playerY = SCREEN_HEIGHT - 80;
+            if (keyHandler.downPressed == true) {
+               playerY += playerSpeed;
+               if (playerY + 80 >= SCREEN_HEIGHT) {
+                  playerY = SCREEN_HEIGHT - 80;
+               }
             }
-         }
-         if (keyHandler.leftPressed == true) {
-            playerX -= playerSpeed;
-            if (playerX <= 0) {
-               playerX = 0;
+            if (keyHandler.leftPressed == true) {
+               playerX -= playerSpeed;
+               if (playerX <= 0) {
+                  playerX = 0;
+               }
             }
-         }
-         if (keyHandler.rightPressed == true) {
-            playerX += playerSpeed;
-            if (playerX + 60 >= SCREEN_WIDTH) {
-               playerX = SCREEN_WIDTH - 60;
+            if (keyHandler.rightPressed == true) {
+               playerX += playerSpeed;
+               if (playerX + 60 >= SCREEN_WIDTH) {
+                  playerX = SCREEN_WIDTH - 60;
+               }
             }
          }
       }
    }
-}
 }

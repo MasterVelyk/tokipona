@@ -9,7 +9,7 @@ public class NotebookPage {
     private BufferedImage img = null;
     private String sentenceContext; // context for the situation in the notebook
     private Sentence answer; // answer for the page
-    private Sentence guess; //guess for the page
+    private Sentence guess; // guess for the page
     protected boolean completed = false;
 
     public NotebookPage(Sentence ans, String context) {
@@ -25,7 +25,7 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(getClass().getResource("/images/strawberry"+".jpg"));
+            img = ImageIO.read(getClass().getResource("/images/strawberry" + ".jpg"));
         } catch (IOException e) {
             System.out.println(e);
         }
