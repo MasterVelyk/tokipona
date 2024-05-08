@@ -9,14 +9,14 @@ public class NotebookPage {
     private BufferedImage img = null;
     private String sentenceContext; // context for the situation in the notebook
     private Sentence answer; // answer for the page
-    private Sentence guess; // player's guess for the page
+    private Sentence guess; //guess for the page
+    protected boolean completed = false;
 
     public NotebookPage(Sentence ans, String context) {
         try {
-            img = ImageIO.read(new File("strawberry.jpg"));
-            System.out.println("Strawburry :D");
+            img = ImageIO.read(new File(".vscode/images/strawberry.jpg"));
         } catch (IOException e) {
-            System.out.println("No strawburry :(");
+            System.out.println(e);
         }
 
         answer = ans;
@@ -25,11 +25,14 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(new File("strawberry.jpg"));
+            img = ImageIO.read(getClass().getResource("/images/strawberry"+".jpg"));
         } catch (IOException e) {
+            System.out.println(e);
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
-        answerArray.add(Masterlist.workinglist[0]); 
+        answerArray.add(new Word("soweli"));
+        answerArray.add(new Word("soweli"));
+        answerArray.add(new Word("soweli"));
         answer = new Sentence(answerArray);
     }
 
