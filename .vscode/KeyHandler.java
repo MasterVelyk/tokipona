@@ -1,12 +1,14 @@
 import java.awt.event.*;
 import java.util.ArrayList;
 
+@SuppressWarnings("removal")
 public class KeyHandler implements KeyListener, MouseListener, MouseMotionListener {
     protected boolean upPressed = false;
     protected boolean downPressed = false;
     protected boolean rightPressed = false;
     protected boolean leftPressed = false;
     protected boolean notebookOpen = false;
+    public boolean checkGuess = false;
     protected int grabbedWord = -1;
     protected int mouseX, mouseY;
     protected ArrayList<Integer> guessList = new ArrayList<Integer>();
@@ -27,8 +29,8 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
         }
          }
          else {
-           if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-           guessList.clear();
+           if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            checkGuess = true;
            }
          }
     }
@@ -58,23 +60,21 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
 
         if ((x <= 100) && (y <= 100)) {
             notebookOpen = !(notebookOpen);
+            guessList.clear();
         }
     }
 
     public void mousePressed(MouseEvent e) {
-      System.out.println("press");
         if (notebookOpen == true) {
          if (mouseX > 25 && mouseX < 75 && mouseY > 405 && mouseY < 455) {
             grabbedWord = 0;
          }  
         }
     }
-
-    @SuppressWarnings("deprecation")
+    
     public void mouseReleased(MouseEvent e) {
-      System.out.println("release");
         if (notebookOpen == true) {
-         if (grabbedWord != -1) {
+         if (grabbedWord != -1 && mouseX > 30 && mouseX < 490 && mouseY > 350 && mouseY < 410) {
             guessList.add((new Integer(grabbedWord)));
          }
          grabbedWord = -1;
@@ -101,5 +101,9 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY()-20;
+    }
+    
+    public void clearGuessList() {
+      guessList.clear();
     }
 }

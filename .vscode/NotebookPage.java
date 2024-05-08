@@ -9,8 +9,7 @@ public class NotebookPage {
     private BufferedImage img = null;
     private String sentenceContext; // context for the situation in the notebook
     private Sentence answer; // answer for the page
-    private Sentence guess; //guess for the page
-    protected boolean completed = false;
+    private Sentence guess; // player's guess for the page
 
     public NotebookPage(Sentence ans, String context) {
         try {
@@ -25,7 +24,7 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(getClass().getResource("/images/strawberry"+".jpg"));
+            img = ImageIO.read(new File("strawberry.jpg"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -54,15 +53,18 @@ public class NotebookPage {
 
     public boolean checkGuess() {
         if (answer.equals(guess)) {
+            completed = true;
             return true;
         }
         return false;
     }
 
-    public Sentence writeGuess() {
-        // Scanner input = new Scanner(System.in);
-        System.out.println("Input a word.");
-
-        return null;
+    public void writeGuess(ArrayList<Word> g) {
+         guess.clear();
+        for (int i = 0; i < answer.getSentence().size(); i++) {
+         if (i < g.size()) {
+            guess.add(g.get(i));
+           }
+        }
     }
 }
