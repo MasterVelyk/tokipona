@@ -13,7 +13,11 @@ public class Word {
     public Word(String tokiPonaWord) {
         toki = tokiPonaWord;
         try {
+<<<<<<< HEAD
          sitelen = ImageIO.read(getClass().getResource("/images/"+tokiPonaWord+".png"));
+=======
+         sitelen = ImageIO.read(getClass().getResource("/images/soweli"+".jpg"));
+>>>>>>> origin/main
         } catch (IOException e) {
             System.out.println("/images/" + tokiPonaWord + ".jpg");
         }

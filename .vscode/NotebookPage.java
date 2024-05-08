@@ -8,8 +8,13 @@ import javax.imageio.ImageIO;
 public class NotebookPage {
     private BufferedImage img = null;
     private String sentenceContext; // context for the situation in the notebook
+<<<<<<< HEAD
     private Sentence answer = new Sentence(); // answer for the page
     private Sentence guess = new Sentence(); //guess for the page
+=======
+    private Sentence answer; // answer for the page
+    private Sentence guess; //guess for the page
+>>>>>>> origin/main
     protected boolean completed = false;
 
     public NotebookPage(Sentence ans, String context) {
@@ -25,8 +30,13 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
+<<<<<<< HEAD
             img = ImageIO.read(getClass().getResource("/images/soweli"+".png"));
+=======
+            img = ImageIO.read(getClass().getResource("/images/strawberry"+".jpg"));
+>>>>>>> origin/main
         } catch (IOException e) {
+            System.out.println(e);
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
         answerArray.add(new Word("soweli"));
