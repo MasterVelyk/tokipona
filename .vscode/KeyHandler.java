@@ -6,7 +6,7 @@ public class KeyHandler implements KeyListener {
     protected boolean rightPressed = false;
     protected boolean leftPressed = false;
 
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) { // Handles which keys are pressed, sends to Main
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = true;
         }
@@ -21,7 +21,7 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) { // Handles which keys are pressed, sends to Main
         if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             upPressed = false;
         }
