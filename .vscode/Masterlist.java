@@ -124,7 +124,6 @@ public class Masterlist {
       new Word("tenpo"),
       new Word("toki"),
       new Word("tomo"),
-      new Word("tonsi"),
       new Word("tu"),
       new Word("unpa"),
       new Word("uta"),
@@ -140,7 +139,7 @@ public class Masterlist {
   protected ArrayList<Word> seenlist = new ArrayList<Word>();
 
   public Masterlist() {
-    seeWord(110);
+    seeWord(109);
   }
 
   public int findWord(String word) {
