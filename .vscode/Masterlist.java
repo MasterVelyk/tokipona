@@ -36,7 +36,6 @@ public class Masterlist {
       new Word("kiwen"),
       new Word("ko"),
       new Word("kon"),
-      new Word("ku"),
       new Word("kule"),
       new Word("kulupu"),
       new Word("kute"),
@@ -100,7 +99,6 @@ public class Masterlist {
       new Word("poka"),
       new Word("poki"),
       new Word("pona"),
-      new Word("pu"),
       new Word("sama"),
       new Word("seli"),
       new Word("selo"),
@@ -126,7 +124,6 @@ public class Masterlist {
       new Word("tenpo"),
       new Word("toki"),
       new Word("tomo"),
-      new Word("tonsi"),
       new Word("tu"),
       new Word("unpa"),
       new Word("uta"),
@@ -142,7 +139,7 @@ public class Masterlist {
   protected ArrayList<Word> seenlist = new ArrayList<Word>();
 
   public Masterlist() {
-    seeWord(110);
+    seeWord(109);
   }
 
   public int findWord(String word) {

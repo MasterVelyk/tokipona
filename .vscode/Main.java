@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
-public class Main extends Canvas implements Runnable {
+public class Main extends JPanel implements Runnable {
    private static final int SCREEN_WIDTH = 520;
    private static final int SCREEN_HEIGHT = 620;
    private int playerX = 100;
@@ -25,13 +25,14 @@ public class Main extends Canvas implements Runnable {
       startGameThread();
       JFrame frame = new JFrame("ma pona");
       frame.add(this);
-      frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+      this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+      frame.pack();
       frame.getContentPane().setBackground(Color.DARK_GRAY);
       frame.setVisible(true);
       frame.setResizable(false);
-      super.addKeyListener(keyHandler);
-      super.addMouseListener(keyHandler);
-      super.addMouseMotionListener(keyHandler);
+      frame.addKeyListener(keyHandler);
+      frame.addMouseListener(keyHandler);
+      frame.addMouseMotionListener(keyHandler);
       frame.setFocusable(true);
       frame.addWindowListener(
             new WindowAdapter() {
@@ -40,15 +41,16 @@ public class Main extends Canvas implements Runnable {
                }
             });
    }
-
+   
    public void paint(Graphics g) {
       super.paint(g);
-
+   
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(Color.WHITE);
       g2.fillOval(playerX, playerY, 40, 40);
       g2.fillRect(10, 10, 80, 80);
-
+      g2.drawLine(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+   
       if (keyHandler.notebookOpen == true) {
          g2.setColor(Color.PINK);
          g2.fillRect(20, 120, 460, 440);
@@ -56,38 +58,37 @@ public class Main extends Canvas implements Runnable {
          g2.setColor(Color.WHITE);
          g2.drawRect(20, 120, 460, 440);
          g2.drawRect(20, 340, 460, 60);
-         g2.drawImage(myNotebook.getPage(0).getImage(), 30, 130, 440, 200, null);
+         g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130, 440, 200, null);
          // draws a circle for each word in the answer
-         for (int i = 0; i < myNotebook.getPage(0).getAnswer().getSentence().size(); i++) {
-            if (myNotebook.getPage(0).getAnswer().getSentence().size() % 2 == 0) {
-               if (i % 2 == 0) {
-                  g2.drawOval(255 + ((i / 2) * 60), 345, 50, 50);
+         if (myNotebook.getPage(myNotebook.openPage).completed == false) {
+            for (int i = 0; i < myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size(); i++) {
+               if (i < keyHandler.guessList.size()) {
+                  g2.fillOval(255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60), 345, 50, 50);
+                  g2.drawImage(myMasterlist.seenlist.get(keyHandler.guessList.get(i).intValue()).sitelen, 255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60), 345, 50, 50, null);
                }
-               if (i % 2 == 1) {
-                  g2.drawOval(255 - (((i + 1) / 2) * 60), 345, 50, 50);
+               else {
+                  g2.drawOval(255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60), 345, 50, 50);
                }
             }
-            if (myNotebook.getPage(0).getAnswer().getSentence().size() % 2 == 1) {
-               if (i % 2 == 0) {
-                  g2.drawOval(225 + ((i / 2) * 60), 345, 50, 50);
-               }
-               if (i % 2 == 1) {
-                  g2.drawOval(225 - (((i + 1) / 2) * 60), 345, 50, 50);
-               }
+         }
+         else {
+            for (int i = 0; i < myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size(); i++) {
+                  g2.fillOval(255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60), 345, 50, 50);
+                  g2.drawImage(myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().get(i).sitelen, 255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60), 345, 50, 50, null);
             }
          }
          // draws a lil node for each word that is seen
          for (int i = 0; i < myMasterlist.seenlist.size(); i++) {
             if (i == keyHandler.grabbedWord) {
-               g2.fillOval(keyHandler.mouseX-25, keyHandler.mouseY-25, 50, 50);
-               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, keyHandler.mouseX-25, keyHandler.mouseY-25, 50, 50,
+               g2.fillOval(keyHandler.mouseX-35, keyHandler.mouseY-35, 50, 50);
+               g2.drawImage(myMasterlist.seenlist.get(i).sitelen, keyHandler.mouseX-35, keyHandler.mouseY-35, 50, 50,
                      null);
             } else {
                g2.fillOval(25 + 60 * i, 405, 50, 50);
                g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 25 + 60 * i, 405, 50, 50, null);
             }
          }
-      }
+      } 
    }
 
    public static void main(String[] args) throws Exception {
@@ -101,12 +102,12 @@ public class Main extends Canvas implements Runnable {
 
    public void run() {
       while (gameThread != null) {
-         double drawInterval = 1000000000 / 24;
+         double drawInterval = 1000000000 / 24; //FPS
          double nextDrawInterval = System.nanoTime() + drawInterval;
          
          update();
          repaint();
-
+      
          try {
             double remainingTime = nextDrawInterval - System.nanoTime();
             remainingTime = remainingTime / 1000000;
@@ -119,7 +120,7 @@ public class Main extends Canvas implements Runnable {
       }
    }
 
-   public void update() { // Handles player movement
+   public void update() {
       if (keyHandler.notebookOpen == false) {
          if (keyHandler.upPressed == true) {
             playerY -= playerSpeed;
@@ -144,6 +145,18 @@ public class Main extends Canvas implements Runnable {
             if (playerX + 60 >= SCREEN_WIDTH) {
                playerX = SCREEN_WIDTH - 60;
             }
+         }
+      }
+      else {
+         if (keyHandler.checkGuess == true) {
+            ArrayList<Word> tempGuessList = new ArrayList<Word>();
+            for (int i = 0; i < keyHandler.guessList.size(); i++) {
+               tempGuessList.add(myMasterlist.seenlist.get(keyHandler.guessList.get(i).intValue()));
+            }
+            myNotebook.getPage(myNotebook.openPage).writeGuess(tempGuessList);
+            myNotebook.getPage(myNotebook.openPage).checkGuess();
+            keyHandler.checkGuess = false;
+            keyHandler.clearGuessList();
          }
       }
    }

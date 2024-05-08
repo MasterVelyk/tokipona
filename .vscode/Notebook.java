@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Notebook {
     protected ArrayList<NotebookPage> pageList = new ArrayList<NotebookPage>();
+    protected int openPage = 0;
 
     public Notebook() {
         pageList.add(new NotebookPage());
