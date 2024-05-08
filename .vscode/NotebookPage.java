@@ -9,12 +9,12 @@ public class NotebookPage {
     private BufferedImage img = null;
     private String sentenceContext; // context for the situation in the notebook
     private Sentence answer = new Sentence(); // answer for the page
-    private Sentence guess = new Sentence(); //guess for the page
+    private Sentence guess = new Sentence(); // guess for the page
     protected boolean completed = false;
 
     public NotebookPage(Sentence ans, String context) {
         try {
-            img = ImageIO.read(new File(".vscode/images/strawberry.jpg"));
+            img = ImageIO.read(new File("/images/soweli.png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -25,7 +25,7 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(getClass().getResource("/images/soweli"+".png"));
+            img = ImageIO.read(getClass().getResource("/images/soweli" + ".png"));
         } catch (IOException e) {
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
@@ -60,11 +60,11 @@ public class NotebookPage {
     }
 
     public void writeGuess(ArrayList<Word> g) {
-         guess.clear();
+        guess.clear();
         for (int i = 0; i < answer.getSentence().size(); i++) {
-         if (i < g.size()) {
-            guess.add(g.get(i));
-           }
+            if (i < g.size()) {
+                guess.add(g.get(i));
+            }
         }
     }
 }

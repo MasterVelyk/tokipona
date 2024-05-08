@@ -143,7 +143,7 @@ public class Masterlist {
   }
 
   public int findWord(String word) {
-      return 0;
+    return 0;
   }
 
   public void seeWord(int wordNum) {
