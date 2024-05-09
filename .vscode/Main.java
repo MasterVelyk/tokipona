@@ -93,8 +93,8 @@ public class Main extends JPanel implements Runnable {
          g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130, 440, 200, null);
          // draws the arrows
          g2.setColor(Color.GREEN);
-         g2.fill(createArrowShape(new Point(440,330), new Point(480,330)));
-         g2.fill(createArrowShape(new Point(60,330), new Point(20,330)));
+         g2.fill(createArrowShape(new Point(435,325), new Point(475,325)));
+         g2.fill(createArrowShape(new Point(65,325), new Point(25,325)));
          g2.setColor(Color.WHITE);
 
          // draws a circle for each word in the answer
