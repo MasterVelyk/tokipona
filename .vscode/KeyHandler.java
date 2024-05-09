@@ -69,6 +69,18 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
                 grabbedWord = 0;
             }
         }
+        else { //notebook not open
+
+            // TODO fix this
+            if (mouseX > 40 && mouseX < 80 && mouseY > 220 && mouseY < 280) { //left arrow pressed
+                System.out.println("left arrow pressed :D");
+            }
+            if (mouseX > 440 && mouseX < 480 && mouseY > 220 && mouseY < 280) { //right arrow pressed
+                System.out.println("right arrow pressed :D");
+            }
+
+
+        }
     }
 
     public void mouseReleased(MouseEvent e) {

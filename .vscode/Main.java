@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -42,6 +43,36 @@ public class Main extends JPanel implements Runnable {
                }
             });
    }
+   
+   public static Shape createArrowShape(Point fromPt, Point toPt) {
+      Polygon arrowPolygon = new Polygon();
+      arrowPolygon.addPoint(-6,1);
+      arrowPolygon.addPoint(3,1);
+      arrowPolygon.addPoint(3,3);
+      arrowPolygon.addPoint(6,0);
+      arrowPolygon.addPoint(3,-3);
+      arrowPolygon.addPoint(3,-1);
+      arrowPolygon.addPoint(-6,-1);
+
+
+      Point midPoint = midpoint(fromPt, toPt);
+
+      double rotate = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
+
+      AffineTransform transform = new AffineTransform();
+      transform.translate(midPoint.x, midPoint.y);
+      double ptDistance = fromPt.distance(toPt);
+      double scale = ptDistance / 12.0; // 12 because it's the length of the arrow polygon.
+      transform.scale(scale, scale);
+      transform.rotate(rotate);
+
+      return transform.createTransformedShape(arrowPolygon);
+   }
+
+   private static Point midpoint(Point p1, Point p2) {
+   return new Point((int)((p1.x + p2.x)/2.0), 
+                     (int)((p1.y + p2.y)/2.0));
+   }
 
    public void paint(Graphics g) {
       super.paint(g);
@@ -60,12 +91,8 @@ public class Main extends JPanel implements Runnable {
          g2.drawRect(20, 120, 460, 440);
          g2.drawRect(20, 340, 460, 60);
          g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130, 440, 200, null);
-         try {
-            g2.drawImage(ImageIO.read(new File("/images/arrow_left.png")),10,10,50,50, null);
-         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
+         g2.fillOval(40, 220, 40, 40);
+         g2.fillOval(420, 220, 40, 40);
          // draws a circle for each word in the answer
          if (myNotebook.getPage(myNotebook.openPage).completed == false) {
             for (int i = 0; i < myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size(); i++) {
