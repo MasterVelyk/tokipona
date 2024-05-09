@@ -44,7 +44,7 @@ public class Main extends JPanel implements Runnable {
             });
    }
    
-   public static Shape createArrowShape(Point fromPt, Point toPt) {
+   public static Shape createArrowShape(Point fromPt, Point toPt) { // boom, a method specifically to draw 2 shapes
       Polygon arrowPolygon = new Polygon();
       arrowPolygon.addPoint(-6,1);
       arrowPolygon.addPoint(3,1);
@@ -91,8 +91,10 @@ public class Main extends JPanel implements Runnable {
          g2.drawRect(20, 120, 460, 440);
          g2.drawRect(20, 340, 460, 60);
          g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130, 440, 200, null);
-         g2.fillOval(40, 220, 40, 40);
-         g2.fillOval(420, 220, 40, 40);
+         // draws the arrows
+         g2.fill(createArrowShape(new Point(440,220), new Point(480,220)));
+         g2.fill(createArrowShape(new Point(80,220), new Point(40,220)));
+
          // draws a circle for each word in the answer
          if (myNotebook.getPage(myNotebook.openPage).completed == false) {
             for (int i = 0; i < myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size(); i++) {
