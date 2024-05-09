@@ -95,6 +95,8 @@ public class Main extends JPanel implements Runnable {
          g2.setColor(Color.GREEN);
          g2.fill(createArrowShape(new Point(435,325), new Point(475,325)));
          g2.fill(createArrowShape(new Point(65,325), new Point(25,325)));
+         g2.fill(createArrowShape(new Point(435,545), new Point(475,545)));
+         g2.fill(createArrowShape(new Point(65,545), new Point(25,545)));
          g2.setColor(Color.WHITE);
 
          // draws a circle for each word in the answer
