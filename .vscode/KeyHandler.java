@@ -8,8 +8,11 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     protected boolean rightPressed = false;
     protected boolean leftPressed = false;
     protected boolean notebookOpen = false;
+    public boolean interact = false;
     public boolean checkGuess = false;
-    protected int grabbedWord = -1;
+    public int changePage = 0;
+    public int changeNodePage = 0;
+    public int nodePage = 0;
     protected int mouseX, mouseY;
     protected ArrayList<Integer> guessList = new ArrayList<Integer>();
 
@@ -27,9 +30,18 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                 rightPressed = true;
             }
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+               interact = true;
+            }
         } else {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 checkGuess = true;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+               changePage = -1;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+                changePage = 1;
             }
         }
     }
@@ -54,10 +66,8 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY() - 20;
 
-        if ((x <= 100) && (y <= 100)) {
+        if ((e.getX() <= 100) && (e.getY()-20 <= 100)) {
             notebookOpen = !(notebookOpen);
             guessList.clear();
         }
@@ -65,19 +75,28 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
 
     public void mousePressed(MouseEvent e) {
         if (notebookOpen == true) {
-            if (mouseX > 25 && mouseX < 75 && mouseY > 405 && mouseY < 455) {
-                grabbedWord = 0;
+            if (e.getY()-20 > 405 && e.getY()-20 < 455) {
+                guessList.add(new Integer((e.getX()-45)/60+(nodePage*14)));
+            }
+            if (e.getY()-20 > 465 && e.getY()-20 < 515) {
+               guessList.add(new Integer(7+(e.getX()-45)/60+(nodePage*14)));
+            }
+            else if (e.getX() > 30 && e.getX() < 75 && e.getY()-20 > 325 && e.getY()-20 < 350) {
+               changePage = -1;
+            }
+            else if (e.getX() > 440 && e.getX() < 485 && e.getY()-20 > 325 && e.getY()-20 < 350) {
+               changePage = 1;
+            }
+            else if (e.getX() > 30 && e.getX() < 75 && e.getY()-20 > 545 && e.getY()-20 < 570) {
+               changeNodePage = -1;
+            }
+            else if (e.getX() > 440 && e.getX() < 485 && e.getY()-20 > 545 && e.getY()-20 < 570) {
+               changeNodePage = 1;
             }
         }
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (notebookOpen == true) {
-            if (grabbedWord != -1 && mouseX > 30 && mouseX < 490 && mouseY > 350 && mouseY < 410) {
-                guessList.add((new Integer(grabbedWord)));
-            }
-            grabbedWord = -1;
-        }
     }
 
     public void mouseEntered(MouseEvent e) {
@@ -93,13 +112,9 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public void mouseDragged(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY() - 20;
     }
 
     public void mouseMoved(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY() - 20;
     }
 
     public void clearGuessList() {

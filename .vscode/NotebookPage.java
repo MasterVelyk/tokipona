@@ -12,9 +12,9 @@ public class NotebookPage {
     private Sentence guess = new Sentence(); // guess for the page
     protected boolean completed = false;
 
-    public NotebookPage(Sentence ans, String context) {
+    public NotebookPage(Sentence ans, String context, String image) {
         try {
-            img = ImageIO.read(new File("/images/soweli.png"));
+            img = ImageIO.read(new File("/images/"+image+".png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -25,13 +25,10 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(getClass().getResource("/images/soweli" + ".png"));
+            img = ImageIO.read(getClass().getResource("/images/sitelen" + ".png"));
         } catch (IOException e) {
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
-        answerArray.add(new Word("soweli"));
-        answerArray.add(new Word("soweli"));
-        answerArray.add(new Word("soweli"));
         answer = new Sentence(answerArray);
     }
 
