@@ -12,16 +12,16 @@ import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends JPanel implements Runnable {
-   private static final int SCREEN_WIDTH = 520;
-   private static final int SCREEN_HEIGHT = 620;
+   protected static final int SCREEN_WIDTH = 520;
+   protected static final int SCREEN_HEIGHT = 620;
    private int playerX = 240;
-   private int playerY = 500;
+   private int playerY = 300;
    private int playerSpeed = 10;
    private int room = 0;
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
-   
-   private int offset = 70;
+
+   private int offset = 75;
 
    Thread gameThread;
    KeyHandler keyHandler = new KeyHandler();
@@ -84,17 +84,17 @@ public class Main extends JPanel implements Runnable {
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(Color.WHITE);
       g2.fillOval(playerX, playerY, 40, 40);
-      g2.fillRect(10, SCREEN_HEIGHT - 10 - 80, 80, 80); // toggle notebook button
+      g2.fillRect(10, SCREEN_HEIGHT - 90, 80, 80); // toggle notebook button
 
       if (keyHandler.notebookOpen == true) {
          // draws the notebook
          g2.setColor(new Color(223, 189, 159));
-         g2.fillRect(20, 120 - 80, 460, 440);
-         g2.fillRect(20, 340 - 80, 460, 60);
+         g2.fillRect(20, 120 - offset, 460, 440);
+         g2.fillRect(20, 340 - offset, 460, 60);
          g2.setColor(new Color(255, 239, 222));
-         g2.drawRect(20, 120 - 80, 460, 440);
-         g2.drawRect(20, 340 - 80, 460, 60);
-         g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130 - 80, 440, 200, null);
+         g2.drawRect(20, 120 - offset, 460, 440);
+         g2.drawRect(20, 340 - offset, 460, 60);
+         g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130 - offset, 440, 200, null);
 
          // draws the arrows
          g2.setColor(new Color(178, 128, 79));
@@ -109,35 +109,35 @@ public class Main extends JPanel implements Runnable {
             for (int i = 0; i < myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size(); i++) {
                if (i < keyHandler.guessList.size()) {
                   g2.fillOval(255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30)
-                        + ((i) * 60), 345, 50, 50);
+                        + ((i) * 60), 345 - offset, 50, 50);
                   g2.drawImage(myMasterlist.seenlist.get(keyHandler.guessList.get(i).intValue()).sitelen, 255
                         - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60),
-                        345, 50, 50, null);
+                        345 - offset, 50, 50, null);
                } else {
                   g2.drawOval(255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30)
-                        + ((i) * 60), 345, 50, 50);
+                        + ((i) * 60), 345 - offset, 50, 50);
                }
             }
          } else {
             for (int i = 0; i < myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size(); i++) {
                g2.fillOval(
                      255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60),
-                     345, 50, 50);
+                     345 - offset, 50, 50);
                g2.drawImage(myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().get(i).sitelen,
                      255 - (myNotebook.getPage(myNotebook.openPage).getAnswer().getSentence().size() * 30) + ((i) * 60),
-                     345, 50, 50, null);
+                     345 - offset, 50, 50, null);
             }
          }
          // draws a lil node for each word that is seen
          for (int i = keyHandler.nodePage * 14; i < keyHandler.nodePage * 14 + 14; i++) {
-            System.out.println(i);
             if (i < myMasterlist.seenlist.size()) {
                if (i % 14 < 7) {
-                  g2.fillOval(45 + 60 * (i % 14), 415, 50, 50);
-                  g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 45 + 60 * (i % 14), 415, 50, 50, null);
+                  g2.fillOval(45 + 60 * (i % 14), 415 - offset, 50, 50);
+                  g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 45 + 60 * (i % 14), 415 - offset, 50, 50, null);
                } else {
-                  g2.fillOval(45 + 60 * ((i % 14) - 7), 475, 50, 50);
-                  g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 45 + 60 * ((i % 14) - 7), 475, 50, 50, null);
+                  g2.fillOval(45 + 60 * ((i % 14) - 7), 475 - offset, 50, 50);
+                  g2.drawImage(myMasterlist.seenlist.get(i).sitelen, 45 + 60 * ((i % 14) - 7), 475 - offset, 50, 50,
+                        null);
                }
             }
          }
@@ -182,14 +182,14 @@ public class Main extends JPanel implements Runnable {
       if (keyHandler.notebookOpen == false) {
          if (keyHandler.upPressed == true) {
             playerY -= playerSpeed;
-            if (playerY <= 100) {
-               playerY = 100;
+            if (playerY <= 0) {
+               playerY = 0;
             }
          }
          if (keyHandler.downPressed == true) {
             playerY += playerSpeed;
-            if (playerY + 80 >= SCREEN_HEIGHT) {
-               playerY = SCREEN_HEIGHT - 80;
+            if (playerY + 135 >= SCREEN_HEIGHT) {
+               playerY = SCREEN_HEIGHT - 135;
             }
          }
          if (keyHandler.leftPressed == true) {
@@ -200,8 +200,8 @@ public class Main extends JPanel implements Runnable {
          }
          if (keyHandler.rightPressed == true) {
             playerX += playerSpeed;
-            if (playerX + 60 >= SCREEN_WIDTH) {
-               playerX = SCREEN_WIDTH - 60;
+            if (playerX + 41 >= SCREEN_WIDTH) {
+               playerX = SCREEN_WIDTH - 41;
             }
          }
          if (room == 0) {
@@ -253,13 +253,11 @@ public class Main extends JPanel implements Runnable {
             keyHandler.changePage = 0;
          }
          if (keyHandler.changeNodePage == 1) {
-            System.out.println("+");
             if ((keyHandler.nodePage + 1) * 14 < myMasterlist.seenlist.size()) {
                keyHandler.nodePage += 1;
             }
             keyHandler.changeNodePage = 0;
          } else if (keyHandler.changeNodePage == -1) {
-            System.out.println("-");
             if (keyHandler.nodePage > 0) {
                keyHandler.nodePage -= 1;
             }

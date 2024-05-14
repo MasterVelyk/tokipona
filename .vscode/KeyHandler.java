@@ -16,6 +16,8 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     protected int mouseX, mouseY;
     protected ArrayList<Integer> guessList = new ArrayList<Integer>();
 
+    private int offset = 60;
+
     public void keyPressed(KeyEvent e) {
         if (notebookOpen == false) {
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
@@ -66,8 +68,7 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public void mouseClicked(MouseEvent e) {
-
-        if ((e.getX() <= 100) && (e.getY() - 20 <= 100)) {
+        if ((e.getX() <= 100) && (e.getY() >= Main.SCREEN_HEIGHT - offset)) {
             notebookOpen = !(notebookOpen);
             guessList.clear();
         }
@@ -75,7 +76,7 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
 
     public void mousePressed(MouseEvent e) {
         if (notebookOpen == true) {
-            if (e.getY() - 20 > 405 && e.getY() - 20 < 455) {
+            if (e.getY() - 20 > 405 - offset && e.getY() - 20 < 455) {
                 guessList.add(new Integer((e.getX() - 45) / 60 + (nodePage * 14)));
             }
             if (e.getY() - 20 > 465 && e.getY() - 20 < 515) {

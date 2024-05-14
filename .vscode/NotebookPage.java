@@ -14,7 +14,7 @@ public class NotebookPage {
 
     public NotebookPage(Sentence ans, String context, String image) {
         try {
-            img = ImageIO.read(new File("/images/"+image+".png"));
+            img = ImageIO.read(new File("/images/" + image + ".png"));
         } catch (IOException e) {
             System.out.println(e);
         }
