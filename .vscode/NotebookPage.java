@@ -8,12 +8,13 @@ import javax.imageio.ImageIO;
 public class NotebookPage {
     private BufferedImage img = null;
     private String sentenceContext; // context for the situation in the notebook
-    private Sentence answer; // answer for the page
-    private Sentence guess; // player's guess for the page
+    private Sentence answer = new Sentence(); // answer for the page
+    private Sentence guess = new Sentence(); // guess for the page
+    protected boolean completed = false;
 
-    public NotebookPage(Sentence ans, String context) {
+    public NotebookPage(Sentence ans, String context, String image) {
         try {
-            img = ImageIO.read(new File(".vscode/images/strawberry.jpg"));
+            img = ImageIO.read(new File("/images/"+image+".png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -24,14 +25,10 @@ public class NotebookPage {
 
     public NotebookPage() {
         try {
-            img = ImageIO.read(new File("strawberry.jpg"));
+            img = ImageIO.read(getClass().getResource("/images/sitelen" + ".png"));
         } catch (IOException e) {
-            System.out.println(e);
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
-        answerArray.add(new Word("soweli"));
-        answerArray.add(new Word("soweli"));
-        answerArray.add(new Word("soweli"));
         answer = new Sentence(answerArray);
     }
 
@@ -60,11 +57,11 @@ public class NotebookPage {
     }
 
     public void writeGuess(ArrayList<Word> g) {
-         guess.clear();
+        guess.clear();
         for (int i = 0; i < answer.getSentence().size(); i++) {
-         if (i < g.size()) {
-            guess.add(g.get(i));
-           }
+            if (i < g.size()) {
+                guess.add(g.get(i));
+            }
         }
     }
 }

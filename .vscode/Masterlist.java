@@ -139,11 +139,10 @@ public class Masterlist {
   protected ArrayList<Word> seenlist = new ArrayList<Word>();
 
   public Masterlist() {
-    seeWord(109);
   }
 
   public int findWord(String word) {
-      return 0;
+    return 0;
   }
 
   public void seeWord(int wordNum) {
