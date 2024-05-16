@@ -12,4 +12,8 @@ public class Notebook {
     public NotebookPage getPage(int B) {
         return pageList.get(B);
     }
+    
+    public void addPage(NotebookPage page) {
+      pageList.add(page);
+    }
 }

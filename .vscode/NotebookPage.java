@@ -7,20 +7,18 @@ import javax.imageio.ImageIO;
 
 public class NotebookPage {
     private BufferedImage img = null;
-    private String sentenceContext; // context for the situation in the notebook
     private Sentence answer = new Sentence(); // answer for the page
     private Sentence guess = new Sentence(); // guess for the page
     protected boolean completed = false;
 
-    public NotebookPage(Sentence ans, String context, String image) {
+    public NotebookPage(Sentence ans, String image) {
         try {
-            img = ImageIO.read(new File("/images/" + image + ".png"));
+            img = ImageIO.read(getClass().getResource("/images/" + image + ".png"));
         } catch (IOException e) {
             System.out.println(e);
         }
 
         answer = ans;
-        sentenceContext = context;
     }
 
     public NotebookPage() {
@@ -35,10 +33,6 @@ public class NotebookPage {
 
     public BufferedImage getImage() {
         return img;
-    }
-
-    public String getContext() {
-        return sentenceContext;
     }
 
     public Sentence getAnswer() {

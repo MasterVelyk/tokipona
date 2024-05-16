@@ -79,13 +79,13 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
             if (e.getY() - 20 > 415 && e.getY() - 20 < 465) {
                 guessList.add(new Integer(7 + (e.getX() - 45) / 60 + (nodePage * 14)));
                 checkValid = true;
-            } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 325 && e.getY() - 20 < 350) {
+            } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 250 && e.getY() - 20 < 275) {
                 changePage = -1;
-            } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 325 && e.getY() - 20 < 350) {
+            } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 250 && e.getY() - 20 < 275) {
                 changePage = 1;
-            } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 545 && e.getY() - 20 < 570) {
+            } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 470 && e.getY() - 20 < 495) {
                 changeNodePage = -1;
-            } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 545 && e.getY() - 20 < 570) {
+            } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 470 && e.getY() - 20 < 495) {
                 changeNodePage = 1;
             }
         }

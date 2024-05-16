@@ -20,7 +20,7 @@ public class Main extends JPanel implements Runnable {
    private int room = 0;
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
-   private EventHandler eventHandler = new EventHandler(myMasterlist);
+   private EventHandler eventHandler = new EventHandler(myMasterlist, myNotebook);
    private ArrayList<Integer> dialogueSentence = new ArrayList<Integer>();
    private boolean displayDialogue = false;
    private boolean interactable = false;
@@ -281,6 +281,7 @@ public class Main extends JPanel implements Runnable {
             if (myNotebook.openPage + 1 < myNotebook.pageList.size()) {
                myNotebook.openPage += 1;
                keyHandler.clearGuessList();
+               System.out.println(myNotebook.openPage);
             }
             keyHandler.changePage = 0;
          } else if (keyHandler.changePage == -1) {
