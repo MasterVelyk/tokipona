@@ -36,7 +36,7 @@ public class Main extends JPanel implements Runnable {
       JFrame frame = new JFrame("ma pona");
       frame.add(this);
       this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-      this.setBackground(new Color(0, 255, 0));
+      this.setBackground(new Color(115, 115, 115));
       frame.pack();
       //frame.getContentPane().setBackground(Color.PINK);
       frame.setVisible(true);
@@ -92,6 +92,9 @@ public class Main extends JPanel implements Runnable {
       g2.fillRect(10, SCREEN_HEIGHT - 90, 80, 80); // toggle notebook button
 
       if (keyHandler.notebookOpen == true) {
+         Font f = new Font("Comic Sans MS", Font.BOLD, 200);
+         g2.setFont(f);
+         
          // draws the notebook
          g2.setColor(new Color(223, 189, 159));
          g2.fillRect(20, 120 - offset, 460, 440);
@@ -156,9 +159,6 @@ public class Main extends JPanel implements Runnable {
                for (int i = 0; i < dialogueSentence.size(); i++) {
                   g2.drawImage(Masterlist.masterlist[dialogueSentence.get(i).intValue()].sitelen, 100+50*i, 545, 50, 50, null);
                }
-            }
-            else {
-               g2.drawString("Space to interact", 100, 545);
             }
          }
       }
@@ -231,16 +231,13 @@ public class Main extends JPanel implements Runnable {
          
          //get the right dialogue
          if (interactable == true) {
-            if (keyHandler.interact == true) {
-                 if (eventHandler.hasNextLine || eventHandler.myLine == -1) {
-                     dialogueSentence = eventHandler.runEvent(currentEvent);
-                     displayDialogue = true;
-                 }
-                 else {
-                  displayDialogue = false;
-                 }
-               keyHandler.interact = false;
+            if (displayDialogue == false) {
+               dialogueSentence = eventHandler.runEvent(currentEvent);
+               displayDialogue = true;
             }
+         }
+         else {
+            displayDialogue = false;
          }
 
          // push out of obstcles
