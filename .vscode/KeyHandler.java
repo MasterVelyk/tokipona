@@ -16,6 +16,8 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     protected int mouseX, mouseY;
     protected ArrayList<Integer> guessList = new ArrayList<Integer>();
 
+    private int offset = 60;
+
     public void keyPressed(KeyEvent e) {
         if (notebookOpen == false) {
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
@@ -31,14 +33,14 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
                 rightPressed = true;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-               interact = true;
+                interact = true;
             }
         } else {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 checkGuess = true;
             }
             if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-               changePage = -1;
+                changePage = -1;
             }
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                 changePage = 1;
@@ -66,8 +68,7 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public void mouseClicked(MouseEvent e) {
-
-        if ((e.getX() <= 100) && (e.getY()-20 <= 100)) {
+        if ((e.getX() <= 100) && (e.getY() >= Main.SCREEN_HEIGHT - offset)) {
             notebookOpen = !(notebookOpen);
             guessList.clear();
         }
@@ -75,23 +76,19 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
 
     public void mousePressed(MouseEvent e) {
         if (notebookOpen == true) {
-            if (e.getY()-20 > 405 && e.getY()-20 < 455) {
-                guessList.add(new Integer((e.getX()-45)/60+(nodePage*14)));
+            if (e.getY() - 20 > 405 - offset && e.getY() - 20 < 455) {
+                guessList.add(new Integer((e.getX() - 45) / 60 + (nodePage * 14)));
             }
-            if (e.getY()-20 > 465 && e.getY()-20 < 515) {
-               guessList.add(new Integer(7+(e.getX()-45)/60+(nodePage*14)));
-            }
-            else if (e.getX() > 30 && e.getX() < 75 && e.getY()-20 > 325 && e.getY()-20 < 350) {
-               changePage = -1;
-            }
-            else if (e.getX() > 440 && e.getX() < 485 && e.getY()-20 > 325 && e.getY()-20 < 350) {
-               changePage = 1;
-            }
-            else if (e.getX() > 30 && e.getX() < 75 && e.getY()-20 > 545 && e.getY()-20 < 570) {
-               changeNodePage = -1;
-            }
-            else if (e.getX() > 440 && e.getX() < 485 && e.getY()-20 > 545 && e.getY()-20 < 570) {
-               changeNodePage = 1;
+            if (e.getY() - 20 > 465 && e.getY() - 20 < 515) {
+                guessList.add(new Integer(7 + (e.getX() - 45) / 60 + (nodePage * 14)));
+            } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 325 && e.getY() - 20 < 350) {
+                changePage = -1;
+            } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 325 && e.getY() - 20 < 350) {
+                changePage = 1;
+            } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 545 && e.getY() - 20 < 570) {
+                changeNodePage = -1;
+            } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 545 && e.getY() - 20 < 570) {
+                changeNodePage = 1;
             }
         }
     }
