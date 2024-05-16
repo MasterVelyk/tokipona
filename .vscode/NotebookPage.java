@@ -29,6 +29,7 @@ public class NotebookPage {
         } catch (IOException e) {
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
+        //answerArray.add(new Word("sitelen"));
         answer = new Sentence(answerArray);
     }
 

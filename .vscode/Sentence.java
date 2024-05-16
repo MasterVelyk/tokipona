@@ -14,7 +14,7 @@ public class Sentence {
         return words;
     }
 
-    public Word get(int index){
+    public Word get(int index) {
         return words.get(index);
     }
 

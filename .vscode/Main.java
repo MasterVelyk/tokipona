@@ -20,20 +20,25 @@ public class Main extends JPanel implements Runnable {
    private int room = 0;
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
+   private EventHandler eventHandler = new EventHandler(myMasterlist);
+   private ArrayList<Integer> dialogueSentence = new ArrayList<Integer>();
+   private boolean displayDialogue = false;
+   private boolean interactable = false;
+   private int currentEvent;
 
    private int offset = 75;
 
-   Thread gameThread;
-   KeyHandler keyHandler = new KeyHandler();
+   private Thread gameThread;
+   private KeyHandler keyHandler = new KeyHandler();
 
    public Main() {
       startGameThread();
       JFrame frame = new JFrame("ma pona");
       frame.add(this);
       this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-      this.setBackground(new Color(0, 0, 0));
+      this.setBackground(new Color(0, 255, 0));
       frame.pack();
-      frame.getContentPane().setBackground(Color.DARK_GRAY);
+      //frame.getContentPane().setBackground(Color.PINK);
       frame.setVisible(true);
       frame.setResizable(false);
       frame.addKeyListener(keyHandler);
@@ -146,6 +151,16 @@ public class Main extends JPanel implements Runnable {
             // old guy who says "Toki!"
             g2.fillOval(240, 200, 40, 40);
          }
+         if (interactable == true) {
+            if (displayDialogue == true) {
+               for (int i = 0; i < dialogueSentence.size(); i++) {
+                  g2.drawImage(Masterlist.masterlist[dialogueSentence.get(i).intValue()].sitelen, 100+50*i, 545, 50, 50, null);
+               }
+            }
+            else {
+               g2.drawString("Space to interact", 100, 545);
+            }
+         }
       }
    }
 
@@ -162,7 +177,7 @@ public class Main extends JPanel implements Runnable {
       while (gameThread != null) {
          double drawInterval = 1000000000 / 24; // FPS
          double nextDrawInterval = System.nanoTime() + drawInterval;
-
+         
          update();
          repaint();
 
@@ -206,8 +221,25 @@ public class Main extends JPanel implements Runnable {
          }
          if (room == 0) {
             if (playerX > 170 && playerX < 310 && playerY > 130 && playerY < 270) { // old guy interact zone
-               System.out.println("Space to interact");
-
+               interactable = true;
+               currentEvent = 0;
+            }
+            else {
+               interactable = false;
+            }
+         }
+         
+         //get the right dialogue
+         if (interactable == true) {
+            if (keyHandler.interact == true) {
+                 if (eventHandler.hasNextLine || eventHandler.myLine == -1) {
+                     dialogueSentence = eventHandler.runEvent(currentEvent);
+                     displayDialogue = true;
+                 }
+                 else {
+                  displayDialogue = false;
+                 }
+               keyHandler.interact = false;
             }
          }
 
@@ -229,6 +261,15 @@ public class Main extends JPanel implements Runnable {
             }
          }
       } else {
+         if (keyHandler.checkValid == true) {
+            for (int i = 0; i < keyHandler.guessList.size(); i++) {
+               if (myMasterlist.seenlist.size() < keyHandler.guessList.get(i).intValue()) {
+                  keyHandler.guessList.remove(i);
+                  i-=1;
+               }
+            }
+            keyHandler.checkValid = false;
+         }
          if (keyHandler.checkGuess == true) {
             ArrayList<Word> tempGuessList = new ArrayList<Word>();
             for (int i = 0; i < keyHandler.guessList.size(); i++) {

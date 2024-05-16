@@ -10,6 +10,7 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     protected boolean notebookOpen = false;
     public boolean interact = false;
     public boolean checkGuess = false;
+    public boolean checkValid = false;
     public int changePage = 0;
     public int changeNodePage = 0;
     public int nodePage = 0;
@@ -75,12 +76,17 @@ public class KeyHandler implements KeyListener, MouseListener, MouseMotionListen
     }
 
     public void mousePressed(MouseEvent e) {
+      System.out.println("X = "+e.getX());
+      System.out.println("Y = "+(e.getY()-20));
+      System.out.println();
         if (notebookOpen == true) {
-            if (e.getY() - 20 > 405 - offset && e.getY() - 20 < 455) {
+            if (e.getY() - 20 > 350 && e.getY() - 20 < 400) {
                 guessList.add(new Integer((e.getX() - 45) / 60 + (nodePage * 14)));
+                checkValid = true;
             }
-            if (e.getY() - 20 > 465 && e.getY() - 20 < 515) {
+            if (e.getY() - 20 > 415 && e.getY() - 20 < 465) {
                 guessList.add(new Integer(7 + (e.getX() - 45) / 60 + (nodePage * 14)));
+                checkValid = true;
             } else if (e.getX() > 30 && e.getX() < 75 && e.getY() - 20 > 325 && e.getY() - 20 < 350) {
                 changePage = -1;
             } else if (e.getX() > 440 && e.getX() < 485 && e.getY() - 20 > 325 && e.getY() - 20 < 350) {

@@ -40,8 +40,4 @@ public class Word {
         known = true;
         return true;
     }
-
-    public int compareTo(Word a) {
-        return this.getToki().compareTo(a.getToki());
-    }
 }

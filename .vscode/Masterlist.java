@@ -149,4 +149,8 @@ public class Masterlist {
   public void seeWord(int wordNum) {
     seenlist.add(masterlist[wordNum]);
   }
+  
+  public boolean sortList() {
+   return false;
+  }
 }
