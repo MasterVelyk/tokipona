@@ -18,7 +18,8 @@ public class Main extends JPanel implements Runnable {
    private int playerX = 240;
    private int playerY = 300;
    private int playerSpeed = 10;
-   private int room = 0;
+   private int roomX = 0;
+   private int roomY = 0;
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
    private EventHandler eventHandler = new EventHandler(myMasterlist, myNotebook);
@@ -126,8 +127,9 @@ public class Main extends JPanel implements Runnable {
       return guyPolygon;
    }
 
-   private static Shape createRockShape(int x, int y, boolean middle) {
-      int midX; int midY;
+   private static Shape createTreeShape(int x, int y, boolean middle) {
+      int midX;
+      int midY;
       if (middle) {
          midX = x;
          midY = y;
@@ -136,18 +138,18 @@ public class Main extends JPanel implements Runnable {
          midY = y + 20;
       }
 
-      Polygon rock = new Polygon();
+      Polygon tree = new Polygon();
 
-      rock.addPoint(midX - 20, midY + 20);
-      rock.addPoint(midX - 17, midY + 6);
-      rock.addPoint(midX - 10, midY - 3);
-      rock.addPoint(midX - 7, midY - 15);
-      rock.addPoint(midX, midY - 20); // middle
-      rock.addPoint(midX + 6, midY - 8);
-      rock.addPoint(midX + 15, midY);
-      rock.addPoint(midX + 20, midY + 20);
+      tree.addPoint(midX - 20, midY + 20);
+      tree.addPoint(midX - 17, midY + 6);
+      tree.addPoint(midX - 10, midY - 3);
+      tree.addPoint(midX - 7, midY - 15);
+      tree.addPoint(midX, midY - 20); // middle
+      tree.addPoint(midX + 6, midY - 8);
+      tree.addPoint(midX + 15, midY);
+      tree.addPoint(midX + 20, midY + 20);
 
-      return rock;
+      return tree;
    }
 
    private static Point midpoint(Point p1, Point p2) {
@@ -220,37 +222,246 @@ public class Main extends JPanel implements Runnable {
             }
          }
       } else {
-         if (room == 0) {
+         if (roomX == 0 && roomY == 0) {
             // old guy who says "Toki!"
             Shape guyVar = createGuyShape(240, 200, true);
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
-         }
 
-         // draws the border rocks
-         int x = 0;
-         while (x < SCREEN_WIDTH) {
-            if (x < SCREEN_WIDTH/2-70 || x > SCREEN_WIDTH/2+40) {
-               Shape rockOne = createRockShape(x, 0, false);
-               objectHitboxes.add(rockOne.getBounds2D());
-               g2.fill(rockOne);
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeOne = createTreeShape(x, 0, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+               }
+               x += 40;
             }
-            Shape rockTwo = createRockShape(x, SCREEN_HEIGHT-40-100-0, false);
-            objectHitboxes.add(rockTwo.getBounds2D());
-            g2.fill(rockTwo);
-            x += 40;
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeOne = createTreeShape(0, y, false);
+                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeOne);
+                  g2.fill(TreeTwo);
+               }
+               y += 40;
+            }
          }
-         int y = 0;
-         while (y < SCREEN_HEIGHT-100) {
-            if (y < (SCREEN_HEIGHT-100)/2-70 || y > (SCREEN_HEIGHT-100)/2+40) {
-               Shape rockOne = createRockShape(0, y, false);
-               Shape rockTwo = createRockShape(SCREEN_WIDTH-40-0, y, false);
-               objectHitboxes.add(rockOne.getBounds2D());
-               objectHitboxes.add(rockTwo.getBounds2D());
-               g2.fill(rockOne);
-               g2.fill(rockTwo);
+         if (roomX == 0 && roomY == -1) {
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+               }
+               Shape TreeOne = createTreeShape(x, 0, false);
+               objectHitboxes.add(TreeOne.getBounds2D());
+               g2.fill(TreeOne);
+               x += 40;
             }
-            y += 40;
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+                  Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               y += 40;
+            }
+         }
+         if (roomX == 0 && roomY == 1) {
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeOne = createTreeShape(x, 0, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+                  Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               y += 40;
+            }
+         }
+         if (roomX == 1 && roomY == 0) {
+
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeOne = createTreeShape(x, 0, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+               }
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               y += 40;
+            }
+         }
+         if (roomX == 1 && roomY == -1) {
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+               }
+               Shape TreeOne = createTreeShape(x, 0, false);
+               objectHitboxes.add(TreeOne.getBounds2D());
+               g2.fill(TreeOne);
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               y += 40;
+            }
+         }
+         if (roomX == 1 && roomY == 1) {
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeOne = createTreeShape(x, 0, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               y += 40;
+            }
+         }
+         if (roomX == -1 && roomY == 0) {
+
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeOne = createTreeShape(x, 0, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+               }
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               }
+               Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               y += 40;
+            }
+         }
+         if (roomX == -1 && roomY == -1) {
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+                  objectHitboxes.add(TreeTwo.getBounds2D());
+                  g2.fill(TreeTwo);
+               }
+               Shape TreeOne = createTreeShape(x, 0, false);
+               objectHitboxes.add(TreeOne.getBounds2D());
+               g2.fill(TreeOne);
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               }
+               Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               y += 40;
+            }
+         }
+         if (roomX == -1 && roomY == 1) {
+            int x = 0;
+            while (x < SCREEN_WIDTH) {
+               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
+                  Shape TreeOne = createTreeShape(x, 0, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               }
+               Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               x += 40;
+            }
+            int y = 0;
+            while (y < SCREEN_HEIGHT - 100) {
+               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
+                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
+               objectHitboxes.add(TreeTwo.getBounds2D());
+               g2.fill(TreeTwo);
+               }
+               Shape TreeOne = createTreeShape(0, y, false);
+                  objectHitboxes.add(TreeOne.getBounds2D());
+                  g2.fill(TreeOne);
+               y += 40;
+            }
          }
       }
    }
@@ -289,28 +500,36 @@ public class Main extends JPanel implements Runnable {
          if (keyHandler.upPressed == true) {
             playerY -= playerSpeed;
             if (playerY <= 0) {
-               playerY = 0;
+               playerY = SCREEN_HEIGHT - 135;
+               roomY -= 1;
+               objectHitboxes.clear();
             }
          }
          if (keyHandler.downPressed == true) {
             playerY += playerSpeed;
             if (playerY + 135 >= SCREEN_HEIGHT) {
-               playerY = SCREEN_HEIGHT - 135;
+               playerY = 0;
+               roomY += 1;
+               objectHitboxes.clear();
             }
          }
          if (keyHandler.leftPressed == true) {
             playerX -= playerSpeed;
             if (playerX <= 0) {
-               playerX = 0;
+               playerX = SCREEN_WIDTH;
+               roomX -= 1;
+               objectHitboxes.clear();
             }
          }
          if (keyHandler.rightPressed == true) {
             playerX += playerSpeed;
             if (playerX >= SCREEN_WIDTH) {
-               playerX = SCREEN_WIDTH;
+               playerX = 0;
+               roomX += 1;
+               objectHitboxes.clear();
             }
          }
-         if (room == 0) {
+         if (roomX == 0 && roomY == 0) {
             if (playerX > 170 && playerX < 310 && playerY > 130 && playerY < 270) { // old guy interact zone
                interactable = true;
                currentEvent = 0;
@@ -337,20 +556,18 @@ public class Main extends JPanel implements Runnable {
                inShape = true;
             }
          }
-         if (room == 0) {
-            if (inShape) {
-               if (keyHandler.upPressed) {
-                  playerY += playerSpeed;
-               }
-               if (keyHandler.downPressed) {
-                  playerY -= playerSpeed;
-               }
-               if (keyHandler.leftPressed) {
-                  playerX += playerSpeed;
-               }
-               if (keyHandler.rightPressed) {
-                  playerX -= playerSpeed;
-               }
+         if (inShape) {
+            if (keyHandler.upPressed) {
+               playerY += playerSpeed;
+            }
+            if (keyHandler.downPressed) {
+               playerY -= playerSpeed;
+            }
+            if (keyHandler.leftPressed) {
+               playerX += playerSpeed;
+            }
+            if (keyHandler.rightPressed) {
+               playerX -= playerSpeed;
             }
          }
       } else {
