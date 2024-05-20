@@ -77,6 +77,40 @@ public class Main extends JPanel implements Runnable {
       return transform.createTransformedShape(arrowPolygon);
    }
 
+   public static Shape createGuyShape(int midX, int midY) {
+      //head
+      Polygon guyPolygon = new Polygon();
+      guyPolygon.addPoint(midX-1, midY-5);
+      guyPolygon.addPoint(midX-5, midY-5);
+      guyPolygon.addPoint(midX-8, midY-15);
+      
+      guyPolygon.addPoint(midX, midY-20);
+      
+      guyPolygon.addPoint(midX+8, midY-15);
+      guyPolygon.addPoint(midX+5, midY-5);
+      guyPolygon.addPoint(midX+1, midY-5);
+      
+      //left arm
+      guyPolygon.addPoint(midX+1, midY-1);
+      guyPolygon.addPoint(midX+10, midY+5);
+      guyPolygon.addPoint(midX+1, midY+1);
+      
+      //left leg
+      guyPolygon.addPoint(midX+1, midY+9);
+      guyPolygon.addPoint(midX+10, midY+20);
+      guyPolygon.addPoint(midX, midY+11);
+      //right leg
+      guyPolygon.addPoint(midX-10, midY+20);
+      guyPolygon.addPoint(midX-1, midY+9);
+      
+      //right arm
+      guyPolygon.addPoint(midX-1, midY-1);
+      guyPolygon.addPoint(midX-10, midY+5);
+      guyPolygon.addPoint(midX-1, midY+1);
+    
+      return guyPolygon;
+   }
+
    private static Point midpoint(Point p1, Point p2) {
       return new Point((int) ((p1.x + p2.x) / 2.0),
             (int) ((p1.y + p2.y) / 2.0));
