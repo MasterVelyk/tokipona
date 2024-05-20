@@ -17,11 +17,12 @@ public class EventHandler {
         if (event == 0) {
                 dialogue.add(119);
                 dialogue.add(0);
-                myList.seeWord(119);
-                myList.seeWord(0);
                 pageAns.add(Masterlist.masterlist[119]);
-                pageAns.add(Masterlist.masterlist[119]);
+                pageAns.add(Masterlist.masterlist[0]);
                 myNotebook.addPage(new NotebookPage(new Sentence(pageAns), "toki"));
+        }
+        for (int i = 0; i < dialogue.size(); i++) {
+         myList.seeWord(dialogue.get(i).intValue());
         }
         return dialogue;
     }

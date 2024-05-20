@@ -21,10 +21,9 @@ public class Main extends JPanel implements Runnable {
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
    private EventHandler eventHandler = new EventHandler(myMasterlist, myNotebook);
-   private ArrayList<Integer> dialogueSentence = new ArrayList<Integer>();
-   private boolean displayDialogue = false;
    private boolean interactable = false;
    private int currentEvent;
+   private DialoguePanel dialoguePanel = new DialoguePanel();
 
    private int offset = 75;
 
@@ -34,11 +33,11 @@ public class Main extends JPanel implements Runnable {
    public Main() {
       startGameThread();
       JFrame frame = new JFrame("ma pona");
-      frame.add(this);
-      this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+      frame.add(this, BorderLayout.CENTER);
+      frame.add(dialoguePanel, BorderLayout.SOUTH);
+      this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT-100));
       this.setBackground(new Color(115, 115, 115));
       frame.pack();
-      //frame.getContentPane().setBackground(Color.PINK);
       frame.setVisible(true);
       frame.setResizable(false);
       frame.addKeyListener(keyHandler);
@@ -85,11 +84,11 @@ public class Main extends JPanel implements Runnable {
 
    public void paint(Graphics g) {
       super.paint(g);
+      dialoguePanel.repaint();
 
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(Color.WHITE);
       g2.fillOval(playerX, playerY, 40, 40);
-      g2.fillRect(10, SCREEN_HEIGHT - 90, 80, 80); // toggle notebook button
 
       if (keyHandler.notebookOpen == true) {
          Font f = new Font("Comic Sans MS", Font.BOLD, 200);
@@ -153,13 +152,6 @@ public class Main extends JPanel implements Runnable {
          if (room == 0) {
             // old guy who says "Toki!"
             g2.fillOval(240, 200, 40, 40);
-         }
-         if (interactable == true) {
-            if (displayDialogue == true) {
-               for (int i = 0; i < dialogueSentence.size(); i++) {
-                  g2.drawImage(Masterlist.masterlist[dialogueSentence.get(i).intValue()].sitelen, 100+50*i, 545, 50, 50, null);
-               }
-            }
          }
       }
    }
@@ -231,13 +223,13 @@ public class Main extends JPanel implements Runnable {
          
          //get the right dialogue
          if (interactable == true) {
-            if (displayDialogue == false) {
-               dialogueSentence = eventHandler.runEvent(currentEvent);
-               displayDialogue = true;
+            if (dialoguePanel.displayDialogue == false) {
+               dialoguePanel.dialogueSentence = eventHandler.runEvent(currentEvent);
+               dialoguePanel.displayDialogue = true;
             }
          }
          else {
-            displayDialogue = false;
+            dialoguePanel.displayDialogue = false;
          }
 
          // push out of obstcles
@@ -281,7 +273,6 @@ public class Main extends JPanel implements Runnable {
             if (myNotebook.openPage + 1 < myNotebook.pageList.size()) {
                myNotebook.openPage += 1;
                keyHandler.clearGuessList();
-               System.out.println(myNotebook.openPage);
             }
             keyHandler.changePage = 0;
          } else if (keyHandler.changePage == -1) {
