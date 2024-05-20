@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,6 +25,7 @@ public class Main extends JPanel implements Runnable {
    private boolean interactable = false;
    private int currentEvent;
    private DialoguePanel dialoguePanel = new DialoguePanel();
+   private ArrayList<Rectangle2D> objectHitboxes = new ArrayList<Rectangle2D>();
 
    private int offset = 75;
 
@@ -35,7 +37,7 @@ public class Main extends JPanel implements Runnable {
       JFrame frame = new JFrame("ma pona");
       frame.add(this, BorderLayout.CENTER);
       frame.add(dialoguePanel, BorderLayout.SOUTH);
-      this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT-100));
+      this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT - 100));
       this.setBackground(new Color(115, 115, 115));
       frame.pack();
       frame.setVisible(true);
@@ -77,38 +79,75 @@ public class Main extends JPanel implements Runnable {
       return transform.createTransformedShape(arrowPolygon);
    }
 
-   public static Shape createGuyShape(int midX, int midY) {
-      //head
+   public static Shape createGuyShape(Point point, boolean middle) {
+      return createGuyShape(point.x, point.y, middle);
+   }
+
+   public static Shape createGuyShape(int x, int y, boolean middle) {
+      int midX, midY;
+      if (middle) {
+         midX = x;
+         midY = y;
+      } else {
+         midX = x + 20;
+         midY = y + 20;
+      }
+
+      // head
       Polygon guyPolygon = new Polygon();
-      guyPolygon.addPoint(midX-1, midY-5);
-      guyPolygon.addPoint(midX-5, midY-5);
-      guyPolygon.addPoint(midX-8, midY-15);
-      
-      guyPolygon.addPoint(midX, midY-20);
-      
-      guyPolygon.addPoint(midX+8, midY-15);
-      guyPolygon.addPoint(midX+5, midY-5);
-      guyPolygon.addPoint(midX+1, midY-5);
-      
-      //left arm
-      guyPolygon.addPoint(midX+1, midY-1);
-      guyPolygon.addPoint(midX+10, midY+5);
-      guyPolygon.addPoint(midX+1, midY+1);
-      
-      //left leg
-      guyPolygon.addPoint(midX+1, midY+9);
-      guyPolygon.addPoint(midX+10, midY+20);
-      guyPolygon.addPoint(midX, midY+11);
-      //right leg
-      guyPolygon.addPoint(midX-10, midY+20);
-      guyPolygon.addPoint(midX-1, midY+9);
-      
-      //right arm
-      guyPolygon.addPoint(midX-1, midY-1);
-      guyPolygon.addPoint(midX-10, midY+5);
-      guyPolygon.addPoint(midX-1, midY+1);
-    
+      guyPolygon.addPoint(midX - 1, midY - 5);
+      guyPolygon.addPoint(midX - 5, midY - 5);
+      guyPolygon.addPoint(midX - 8, midY - 15);
+
+      guyPolygon.addPoint(midX, midY - 20);
+
+      guyPolygon.addPoint(midX + 8, midY - 15);
+      guyPolygon.addPoint(midX + 5, midY - 5);
+      guyPolygon.addPoint(midX + 1, midY - 5);
+
+      // left arm
+      guyPolygon.addPoint(midX + 1, midY - 1);
+      guyPolygon.addPoint(midX + 10, midY + 5);
+      guyPolygon.addPoint(midX + 1, midY + 1);
+
+      // left leg
+      guyPolygon.addPoint(midX + 1, midY + 9);
+      guyPolygon.addPoint(midX + 10, midY + 20);
+      guyPolygon.addPoint(midX, midY + 11);
+      // right leg
+      guyPolygon.addPoint(midX - 10, midY + 20);
+      guyPolygon.addPoint(midX - 1, midY + 9);
+
+      // right arm
+      guyPolygon.addPoint(midX - 1, midY - 1);
+      guyPolygon.addPoint(midX - 10, midY + 5);
+      guyPolygon.addPoint(midX - 1, midY + 1);
+
       return guyPolygon;
+   }
+
+   private static Shape createRockShape(int x, int y, boolean middle) {
+      int midX; int midY;
+      if (middle) {
+         midX = x;
+         midY = y;
+      } else {
+         midX = x + 20;
+         midY = y + 20;
+      }
+
+      Polygon rock = new Polygon();
+
+      rock.addPoint(midX - 20, midY + 20);
+      rock.addPoint(midX - 17, midY + 6);
+      rock.addPoint(midX - 10, midY - 3);
+      rock.addPoint(midX - 7, midY - 15);
+      rock.addPoint(midX, midY - 20); // middle
+      rock.addPoint(midX + 6, midY - 8);
+      rock.addPoint(midX + 15, midY);
+      rock.addPoint(midX + 20, midY + 20);
+
+      return rock;
    }
 
    private static Point midpoint(Point p1, Point p2) {
@@ -122,12 +161,14 @@ public class Main extends JPanel implements Runnable {
 
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(Color.WHITE);
-      g2.fillOval(playerX, playerY, 40, 40);
+      g2.fill(createGuyShape(playerX, playerY, true));
+
+      g2.fill(createRockShape(100, 100, true));
 
       if (keyHandler.notebookOpen == true) {
          Font f = new Font("Comic Sans MS", Font.BOLD, 200);
          g2.setFont(f);
-         
+
          // draws the notebook
          g2.setColor(new Color(223, 189, 159));
          g2.fillRect(20, 120 - offset, 460, 440);
@@ -185,7 +226,9 @@ public class Main extends JPanel implements Runnable {
       } else {
          if (room == 0) {
             // old guy who says "Toki!"
-            g2.fillOval(240, 200, 40, 40);
+            Shape guyVar = createGuyShape(240, 200, true);
+            objectHitboxes.add(guyVar.getBounds2D());
+            g2.fill(guyVar);
          }
       }
    }
@@ -203,7 +246,7 @@ public class Main extends JPanel implements Runnable {
       while (gameThread != null) {
          double drawInterval = 1000000000 / 24; // FPS
          double nextDrawInterval = System.nanoTime() + drawInterval;
-         
+
          update();
          repaint();
 
@@ -249,26 +292,31 @@ public class Main extends JPanel implements Runnable {
             if (playerX > 170 && playerX < 310 && playerY > 130 && playerY < 270) { // old guy interact zone
                interactable = true;
                currentEvent = 0;
-            }
-            else {
+            } else {
                interactable = false;
             }
          }
-         
-         //get the right dialogue
+
+         // get the right dialogue
          if (interactable == true) {
             if (dialoguePanel.displayDialogue == false) {
                dialoguePanel.dialogueSentence = eventHandler.runEvent(currentEvent);
                dialoguePanel.displayDialogue = true;
             }
-         }
-         else {
+         } else {
             dialoguePanel.displayDialogue = false;
          }
 
          // push out of obstcles
+         boolean inShape = false;
+         Rectangle2D playerBox = createGuyShape(playerX, playerY, true).getBounds2D();
+         for (int i = 0; i < objectHitboxes.size(); i++) {
+            if (playerBox.intersects(objectHitboxes.get(i))) {
+               inShape = true;
+            }
+         }
          if (room == 0) {
-            if (playerX > 200 && playerX < 280 && playerY > 160 && playerY < 240) { // old guy hitbox
+            if (inShape) {
                if (keyHandler.upPressed) {
                   playerY += playerSpeed;
                }
@@ -288,7 +336,7 @@ public class Main extends JPanel implements Runnable {
             for (int i = 0; i < keyHandler.guessList.size(); i++) {
                if (myMasterlist.seenlist.size() < keyHandler.guessList.get(i).intValue()) {
                   keyHandler.guessList.remove(i);
-                  i-=1;
+                  i -= 1;
                }
             }
             keyHandler.checkValid = false;
