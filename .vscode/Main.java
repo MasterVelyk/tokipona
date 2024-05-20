@@ -163,11 +163,7 @@ public class Main extends JPanel implements Runnable {
       g2.setColor(Color.WHITE);
       g2.fill(createGuyShape(playerX, playerY, true));
 
-      g2.fill(createRockShape(100, 100, true));
-
       if (keyHandler.notebookOpen == true) {
-         Font f = new Font("Comic Sans MS", Font.BOLD, 200);
-         g2.setFont(f);
 
          // draws the notebook
          g2.setColor(new Color(223, 189, 159));
@@ -230,6 +226,32 @@ public class Main extends JPanel implements Runnable {
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
          }
+
+         // draws the border rocks
+         int x = 0;
+         while (x < SCREEN_WIDTH) {
+            if (x < SCREEN_WIDTH/2-70 || x > SCREEN_WIDTH/2+40) {
+               Shape rockOne = createRockShape(x, 0, false);
+               objectHitboxes.add(rockOne.getBounds2D());
+               g2.fill(rockOne);
+            }
+            Shape rockTwo = createRockShape(x, SCREEN_HEIGHT-40-100-0, false);
+            objectHitboxes.add(rockTwo.getBounds2D());
+            g2.fill(rockTwo);
+            x += 40;
+         }
+         int y = 0;
+         while (y < SCREEN_HEIGHT-100) {
+            if (y < (SCREEN_HEIGHT-100)/2-70 || y > (SCREEN_HEIGHT-100)/2+40) {
+               Shape rockOne = createRockShape(0, y, false);
+               Shape rockTwo = createRockShape(SCREEN_WIDTH-40-0, y, false);
+               objectHitboxes.add(rockOne.getBounds2D());
+               objectHitboxes.add(rockTwo.getBounds2D());
+               g2.fill(rockOne);
+               g2.fill(rockTwo);
+            }
+            y += 40;
+         }
       }
    }
 
@@ -284,8 +306,8 @@ public class Main extends JPanel implements Runnable {
          }
          if (keyHandler.rightPressed == true) {
             playerX += playerSpeed;
-            if (playerX + 41 >= SCREEN_WIDTH) {
-               playerX = SCREEN_WIDTH - 41;
+            if (playerX >= SCREEN_WIDTH) {
+               playerX = SCREEN_WIDTH;
             }
          }
          if (room == 0) {
