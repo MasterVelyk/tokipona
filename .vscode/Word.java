@@ -1,3 +1,4 @@
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class Word {
         known = true;
         return true;
     }
-
+    
     public int compareTo(Word a) {
       return this.getToki().compareTo(a.getToki());
     }
