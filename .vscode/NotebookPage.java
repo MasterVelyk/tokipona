@@ -1,5 +1,4 @@
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,6 +8,7 @@ public class NotebookPage {
     private BufferedImage img = null;
     private Sentence answer = new Sentence(); // answer for the page
     private Sentence guess = new Sentence(); // guess for the page
+    protected String imageID = "";
     protected boolean completed = false;
 
     public NotebookPage(Sentence ans, String image) {
@@ -17,7 +17,7 @@ public class NotebookPage {
         } catch (IOException e) {
             System.out.println(e);
         }
-
+        imageID = image;
         answer = ans;
     }
 
@@ -27,7 +27,7 @@ public class NotebookPage {
         } catch (IOException e) {
         }
         ArrayList<Word> answerArray = new ArrayList<Word>();
-        //answerArray.add(new Word("sitelen"));
+        // answerArray.add(new Word("sitelen"));
         answer = new Sentence(answerArray);
     }
 
