@@ -53,109 +53,7 @@ public class Main extends JPanel implements Runnable {
                   System.exit(0);
                }
             });
-   }
-
-   // Creates 2 arrow-shaped Shapes, and returns them
-   public static Shape createArrowShape(Point fromPt, Point toPt) {
-      Polygon arrowPolygon = new Polygon();
-      arrowPolygon.addPoint(-6, 1);
-      arrowPolygon.addPoint(3, 1);
-      arrowPolygon.addPoint(3, 3);
-      arrowPolygon.addPoint(6, 0);
-      arrowPolygon.addPoint(3, -3);
-      arrowPolygon.addPoint(3, -1);
-      arrowPolygon.addPoint(-6, -1);
-
-      Point midPoint = midpoint(fromPt, toPt);
-
-      double rotate = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
-
-      AffineTransform transform = new AffineTransform();
-      transform.translate(midPoint.x, midPoint.y);
-      double ptDistance = fromPt.distance(toPt);
-      double scale = ptDistance / 12.0; // 12 because it's the length of the arrow polygon.
-      transform.scale(scale, scale);
-      transform.rotate(rotate);
-
-      return transform.createTransformedShape(arrowPolygon);
-   }
-
-   public static Shape createGuyShape(Point point, boolean middle) {
-      return createGuyShape(point.x, point.y, middle);
-   }
-
-   public static Shape createGuyShape(int x, int y, boolean middle) {
-      int midX, midY;
-      if (middle) {
-         midX = x;
-         midY = y;
-      } else {
-         midX = x + 20;
-         midY = y + 20;
-      }
-
-      // head
-      Polygon guyPolygon = new Polygon();
-      guyPolygon.addPoint(midX - 1, midY - 5);
-      guyPolygon.addPoint(midX - 5, midY - 5);
-      guyPolygon.addPoint(midX - 8, midY - 15);
-
-      guyPolygon.addPoint(midX, midY - 20);
-
-      guyPolygon.addPoint(midX + 8, midY - 15);
-      guyPolygon.addPoint(midX + 5, midY - 5);
-      guyPolygon.addPoint(midX + 1, midY - 5);
-
-      // left arm
-      guyPolygon.addPoint(midX + 1, midY - 1);
-      guyPolygon.addPoint(midX + 10, midY + 5);
-      guyPolygon.addPoint(midX + 1, midY + 1);
-
-      // left leg
-      guyPolygon.addPoint(midX + 1, midY + 9);
-      guyPolygon.addPoint(midX + 10, midY + 20);
-      guyPolygon.addPoint(midX, midY + 11);
-      // right leg
-      guyPolygon.addPoint(midX - 10, midY + 20);
-      guyPolygon.addPoint(midX - 1, midY + 9);
-
-      // right arm
-      guyPolygon.addPoint(midX - 1, midY - 1);
-      guyPolygon.addPoint(midX - 10, midY + 5);
-      guyPolygon.addPoint(midX - 1, midY + 1);
-
-      return guyPolygon;
-   }
-
-   private static Shape createTreeShape(int x, int y, boolean middle) {
-      int midX;
-      int midY;
-      if (middle) {
-         midX = x;
-         midY = y;
-      } else {
-         midX = x + 20;
-         midY = y + 20;
-      }
-
-      Polygon tree = new Polygon();
-
-      tree.addPoint(midX - 20, midY + 20);
-      tree.addPoint(midX - 17, midY + 6);
-      tree.addPoint(midX - 10, midY - 3);
-      tree.addPoint(midX - 7, midY - 15);
-      tree.addPoint(midX, midY - 20); // middle
-      tree.addPoint(midX + 6, midY - 8);
-      tree.addPoint(midX + 15, midY);
-      tree.addPoint(midX + 20, midY + 20);
-
-      return tree;
-   }
-
-   private static Point midpoint(Point p1, Point p2) {
-      return new Point((int) ((p1.x + p2.x) / 2.0),
-            (int) ((p1.y + p2.y) / 2.0));
-   }
+   }   
 
    public void paint(Graphics g) {
       super.paint(g);
@@ -163,25 +61,25 @@ public class Main extends JPanel implements Runnable {
 
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(Color.WHITE);
-      g2.fill(createGuyShape(playerX, playerY, true));
+      g2.fill(Create.guyShape(playerX, playerY, true));
 
       if (keyHandler.notebookOpen == true) {
 
          // draws the notebook
          g2.setColor(new Color(223, 189, 159));
-         g2.fillRect(20, 120 - offset, 460, 440);
-         g2.fillRect(20, 340 - offset, 460, 60);
+         g2.fillRect(30, 120 - offset, 460, 440);
+         g2.fillRect(30, 340 - offset, 460, 60);
          g2.setColor(new Color(255, 239, 222));
-         g2.drawRect(20, 120 - offset, 460, 440);
-         g2.drawRect(20, 340 - offset, 460, 60);
-         g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 30, 130 - offset, 440, 200, null);
+         g2.drawRect(30, 120 - offset, 460, 440);
+         g2.drawRect(30, 340 - offset, 460, 60);
+         g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 40, 130 - offset, 440, 200, null);
 
          // draws the arrows
          g2.setColor(new Color(178, 128, 79));
-         g2.fill(createArrowShape(new Point(435, 325 - offset), new Point(475, 325 - offset)));
-         g2.fill(createArrowShape(new Point(65, 325 - offset), new Point(25, 325 - offset)));
-         g2.fill(createArrowShape(new Point(435, 545 - offset), new Point(475, 545 - offset)));
-         g2.fill(createArrowShape(new Point(65, 545 - offset), new Point(25, 545 - offset)));
+         g2.fill(Create.arrowShape(new Point(445, 325 - offset), new Point(485, 325 - offset)));
+         g2.fill(Create.arrowShape(new Point(75, 325 - offset), new Point(35, 325 - offset)));
+         g2.fill(Create.arrowShape(new Point(445, 545 - offset), new Point(485, 545 - offset)));
+         g2.fill(Create.arrowShape(new Point(75, 545 - offset), new Point(35, 545 - offset)));
          g2.setColor(new Color(255, 239, 222));
 
          // draws a circle for each word in the answer
@@ -222,247 +120,49 @@ public class Main extends JPanel implements Runnable {
             }
          }
       } else {
-         if (roomX == 0 && roomY == 0) {
+         // stores whether the wall should be whole
+         boolean left = (roomX == -1) ? true : false;
+         boolean right = (roomX == 1) ? true : false;
+         boolean up = (roomY == -1) ? true : false;
+         boolean down = (roomY == 1) ? true : false;
+         
+         int x = 0;
+         while (x < SCREEN_WIDTH) {
+            if (up || x < 200 || x > 300) {
+               Shape tree = Create.treeShape(x, 0, false);
+               objectHitboxes.add(tree.getBounds2D());
+               g2.fill(tree);
+            }
+            if (down || x < 200 || x > 300) {
+               Shape tree = Create.treeShape(x, SCREEN_HEIGHT-40-100, false);
+               objectHitboxes.add(tree.getBounds2D());
+               g2.fill(tree);
+            }
+            x += 40;
+         }
+
+         int y = 0;
+         while (y < SCREEN_HEIGHT-100) {
+            if (left || y < 200 || y > 300) {
+               Shape tree = Create.treeShape(0, y, false);
+               objectHitboxes.add(tree.getBounds2D());
+               g2.fill(tree);
+            }
+            if (right || y < 200 || y > 300) {
+               Shape tree = Create.treeShape(SCREEN_WIDTH-40, y, false);
+               objectHitboxes.add(tree.getBounds2D());
+               g2.fill(tree);
+            }
+
+            y += 40;
+         }
+
+         if (roomX == 0 && roomY == 0) {  // welcome room
             // old guy who says "Toki!"
-            Shape guyVar = createGuyShape(240, 200, true);
+            Shape guyVar = Create.guyShape(240, 200, true);
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
-
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeOne = createTreeShape(x, 0, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-               }
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeOne = createTreeShape(0, y, false);
-                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeOne);
-                  g2.fill(TreeTwo);
-               }
-               y += 40;
-            }
-         }
-         if (roomX == 0 && roomY == -1) {
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-               }
-               Shape TreeOne = createTreeShape(x, 0, false);
-               objectHitboxes.add(TreeOne.getBounds2D());
-               g2.fill(TreeOne);
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-                  Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               y += 40;
-            }
-         }
-         if (roomX == 0 && roomY == 1) {
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeOne = createTreeShape(x, 0, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-                  Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               y += 40;
-            }
-         }
-         if (roomX == 1 && roomY == 0) {
-
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeOne = createTreeShape(x, 0, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-               }
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               y += 40;
-            }
-         }
-         if (roomX == 1 && roomY == -1) {
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-               }
-               Shape TreeOne = createTreeShape(x, 0, false);
-               objectHitboxes.add(TreeOne.getBounds2D());
-               g2.fill(TreeOne);
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               y += 40;
-            }
-         }
-         if (roomX == 1 && roomY == 1) {
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeOne = createTreeShape(x, 0, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               y += 40;
-            }
-         }
-         if (roomX == -1 && roomY == 0) {
-
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeOne = createTreeShape(x, 0, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-               }
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               }
-               Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               y += 40;
-            }
-         }
-         if (roomX == -1 && roomY == -1) {
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-                  objectHitboxes.add(TreeTwo.getBounds2D());
-                  g2.fill(TreeTwo);
-               }
-               Shape TreeOne = createTreeShape(x, 0, false);
-               objectHitboxes.add(TreeOne.getBounds2D());
-               g2.fill(TreeOne);
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               }
-               Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               y += 40;
-            }
-         }
-         if (roomX == -1 && roomY == 1) {
-            int x = 0;
-            while (x < SCREEN_WIDTH) {
-               if (x < SCREEN_WIDTH / 2 - 70 || x > SCREEN_WIDTH / 2 + 40) {
-                  Shape TreeOne = createTreeShape(x, 0, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               }
-               Shape TreeTwo = createTreeShape(x, SCREEN_HEIGHT - 40 - 100 - 0, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               x += 40;
-            }
-            int y = 0;
-            while (y < SCREEN_HEIGHT - 100) {
-               if (y < (SCREEN_HEIGHT - 100) / 2 - 70 || y > (SCREEN_HEIGHT - 100) / 2 + 40) {
-                  Shape TreeTwo = createTreeShape(SCREEN_WIDTH - 40 - 0, y, false);
-               objectHitboxes.add(TreeTwo.getBounds2D());
-               g2.fill(TreeTwo);
-               }
-               Shape TreeOne = createTreeShape(0, y, false);
-                  objectHitboxes.add(TreeOne.getBounds2D());
-                  g2.fill(TreeOne);
-               y += 40;
-            }
-         }
+         } 
       }
    }
 
@@ -550,7 +250,7 @@ public class Main extends JPanel implements Runnable {
 
          // push out of obstcles
          boolean inShape = false;
-         Rectangle2D playerBox = createGuyShape(playerX, playerY, true).getBounds2D();
+         Rectangle2D playerBox = Create.guyShape(playerX, playerY, true).getBounds2D();
          for (int i = 0; i < objectHitboxes.size(); i++) {
             if (playerBox.intersects(objectHitboxes.get(i))) {
                inShape = true;
