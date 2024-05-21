@@ -14,10 +14,14 @@ public class Notebook {
   }
    
   public void addPage(NotebookPage page) {
-      for (int i = 0; i < pageList.size(); i++) {
-    if (!pageList.get(i).getImage().equals(page.getImage())) {
-      pageList.add(page);
-        }
+    boolean contained = false;
+    for (int i = 0; i < pageList.size(); i++) {
+      if (pageList.get(i).imageID.equals(page.imageID)) {
+        contained = true;
       }
     }
+    if (!contained) {
+      pageList.add(page);
+    }
+  }
 }
