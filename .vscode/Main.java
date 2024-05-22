@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,12 +21,15 @@ public class Main extends JPanel implements Runnable {
    private int playerSpeed = 10;
    private int roomX = 0;
    private int roomY = 0;
+   private int roomX = 0;
+   private int roomY = 0;
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
    private EventHandler eventHandler = new EventHandler(myMasterlist, myNotebook);
    private boolean interactable = false;
    private int currentEvent;
    private DialoguePanel dialoguePanel = new DialoguePanel();
+   private ArrayList<Rectangle2D> objectHitboxes = new ArrayList<Rectangle2D>();
    private ArrayList<Rectangle2D> objectHitboxes = new ArrayList<Rectangle2D>();
 
    private int offset = 75;
@@ -38,6 +42,7 @@ public class Main extends JPanel implements Runnable {
       JFrame frame = new JFrame("ma pona");
       frame.add(this, BorderLayout.CENTER);
       frame.add(dialoguePanel, BorderLayout.SOUTH);
+      this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT - 100));
       this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT - 100));
       this.setBackground(new Color(115, 115, 115));
       frame.pack();
@@ -54,6 +59,7 @@ public class Main extends JPanel implements Runnable {
                }
             });
    }   
+   }   
 
    public void paint(Graphics g) {
       super.paint(g);
@@ -66,17 +72,27 @@ public class Main extends JPanel implements Runnable {
 
       if (keyHandler.notebookOpen == true) {
 
+
          // draws the notebook
          g2.setColor(new Color(223, 189, 159));
+         g2.fillRect(30, 120 - offset, 460, 440);
+         g2.fillRect(30, 340 - offset, 460, 60);
          g2.fillRect(30, 120 - offset, 460, 440);
          g2.fillRect(30, 340 - offset, 460, 60);
          g2.setColor(new Color(255, 239, 222));
          g2.drawRect(30, 120 - offset, 460, 440);
          g2.drawRect(30, 340 - offset, 460, 60);
          g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 40, 130 - offset, 440, 200, null);
+         g2.drawRect(30, 120 - offset, 460, 440);
+         g2.drawRect(30, 340 - offset, 460, 60);
+         g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 40, 130 - offset, 440, 200, null);
 
          // draws the arrows
          g2.setColor(new Color(178, 128, 79));
+         g2.fill(Create.arrowShape(new Point(445, 325 - offset), new Point(485, 325 - offset)));
+         g2.fill(Create.arrowShape(new Point(75, 325 - offset), new Point(35, 325 - offset)));
+         g2.fill(Create.arrowShape(new Point(445, 545 - offset), new Point(485, 545 - offset)));
+         g2.fill(Create.arrowShape(new Point(75, 545 - offset), new Point(35, 545 - offset)));
          g2.fill(Create.arrowShape(new Point(445, 325 - offset), new Point(485, 325 - offset)));
          g2.fill(Create.arrowShape(new Point(75, 325 - offset), new Point(35, 325 - offset)));
          g2.fill(Create.arrowShape(new Point(445, 545 - offset), new Point(485, 545 - offset)));
@@ -237,6 +253,7 @@ public class Main extends JPanel implements Runnable {
          double drawInterval = 1000000000 / 24; // FPS
          double nextDrawInterval = System.nanoTime() + drawInterval;
 
+
          update();
          repaint();
 
@@ -260,11 +277,17 @@ public class Main extends JPanel implements Runnable {
                playerY = SCREEN_HEIGHT - 135;
                roomY -= 1;
                objectHitboxes.clear();
+               playerY = SCREEN_HEIGHT - 135;
+               roomY -= 1;
+               objectHitboxes.clear();
             }
          }
          if (keyHandler.downPressed == true) {
             playerY += playerSpeed;
             if (playerY + 135 >= SCREEN_HEIGHT) {
+               playerY = 0;
+               roomY += 1;
+               objectHitboxes.clear();
                playerY = 0;
                roomY += 1;
                objectHitboxes.clear();
@@ -276,10 +299,17 @@ public class Main extends JPanel implements Runnable {
                playerX = SCREEN_WIDTH;
                roomX -= 1;
                objectHitboxes.clear();
+               playerX = SCREEN_WIDTH;
+               roomX -= 1;
+               objectHitboxes.clear();
             }
          }
          if (keyHandler.rightPressed == true) {
             playerX += playerSpeed;
+            if (playerX >= SCREEN_WIDTH) {
+               playerX = 0;
+               roomX += 1;
+               objectHitboxes.clear();
             if (playerX >= SCREEN_WIDTH) {
                playerX = 0;
                roomX += 1;
@@ -315,16 +345,38 @@ public class Main extends JPanel implements Runnable {
          }
 
          // get the right dialogue
+
+         // get the right dialogue
          if (interactable == true) {
             if (dialoguePanel.displayDialogue == false) {
                dialoguePanel.dialogueSentence = eventHandler.runEvent(currentEvent);
                dialoguePanel.displayDialogue = true;
             }
          } else {
+         } else {
             dialoguePanel.displayDialogue = false;
          }
 
          // push out of obstcles
+         boolean inShape = false;
+         Rectangle2D playerBox = Create.guyShape(playerX, playerY, true).getBounds2D();
+         for (int i = 0; i < objectHitboxes.size(); i++) {
+            if (playerBox.intersects(objectHitboxes.get(i))) {
+               inShape = true;
+            }
+         }
+         if (inShape) {
+            if (keyHandler.upPressed) {
+               playerY += playerSpeed;
+            }
+            if (keyHandler.downPressed) {
+               playerY -= playerSpeed;
+            }
+            if (keyHandler.leftPressed) {
+               playerX += playerSpeed;
+            }
+            if (keyHandler.rightPressed) {
+               playerX -= playerSpeed;
          boolean inShape = false;
          Rectangle2D playerBox = Create.guyShape(playerX, playerY, true).getBounds2D();
          for (int i = 0; i < objectHitboxes.size(); i++) {
@@ -351,6 +403,7 @@ public class Main extends JPanel implements Runnable {
             for (int i = 0; i < keyHandler.guessList.size(); i++) {
                if (myMasterlist.seenlist.size() < keyHandler.guessList.get(i).intValue()) {
                   keyHandler.guessList.remove(i);
+                  i -= 1;
                   i -= 1;
                }
             }
@@ -393,3 +446,4 @@ public class Main extends JPanel implements Runnable {
       }
    }
 }
+
