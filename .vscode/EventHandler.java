@@ -15,11 +15,37 @@ public class EventHandler {
       ArrayList<Word> pageAns = new ArrayList<Word>();
         // old man dialogue
         if (event == 0) {
-                dialogue.add(119);
-                dialogue.add(0);
+         // toki a
+                dialogue.add(119); //toki
+                dialogue.add(0); // a
                 pageAns.add(Masterlist.masterlist[119]);
                 pageAns.add(Masterlist.masterlist[0]);
                 myNotebook.addPage(new NotebookPage(new Sentence(pageAns), "toki"));
+        } else if (event == 1) {
+         // kasi suli li pona
+         dialogue.add(23); // kasi
+         pageAns.add(Masterlist.masterlist[23]);
+         dialogue.add(110); // suli
+         pageAns.add(Masterlist.masterlist[110]);
+         myNotebook.addPage(new NotebookPage(new Sentence(pageAns), "kasi"));
+        } else if (event == 2) {
+        // kasi mute a
+         dialogue.add(23); // kasi
+         pageAns.add(Masterlist.masterlist[23]);
+         dialogue.add(68); // mute
+         pageAns.add(Masterlist.masterlist[68]);
+         dialogue.add(0); // a
+         pageAns.add(Masterlist.masterlist[0]);
+         myNotebook.addPage(new NotebookPage(new Sentence(pageAns), "mute"));
+        } else if (event == 3) {
+         // kasi li lili
+         dialogue.add(23); // kasi
+         pageAns.add(Masterlist.masterlist[23]);
+         dialogue.add(44); // li
+         pageAns.add(Masterlist.masterlist[44]);
+         dialogue.add(45); // lili
+         pageAns.add(Masterlist.masterlist[45]);
+         myNotebook.addPage(new NotebookPage(new Sentence(pageAns), "lili"));
         }
         for (int i = 0; i < dialogue.size(); i++) {
          myList.seeWord(dialogue.get(i).intValue());
