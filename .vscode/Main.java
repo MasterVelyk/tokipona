@@ -60,8 +60,9 @@ public class Main extends JPanel implements Runnable {
       dialoguePanel.repaint();
 
       Graphics2D g2 = (Graphics2D) g;
-      g2.setColor(Color.WHITE);
+      g2.setColor(Color.YELLOW);
       g2.fill(Create.guyShape(playerX, playerY, true));
+      g2.setColor(Color.WHITE);
 
       if (keyHandler.notebookOpen == true) {
 
@@ -76,10 +77,14 @@ public class Main extends JPanel implements Runnable {
 
          // draws the arrows
          g2.setColor(new Color(178, 128, 79));
-         g2.fill(Create.arrowShape(new Point(445, 325 - offset), new Point(485, 325 - offset)));
-         g2.fill(Create.arrowShape(new Point(75, 325 - offset), new Point(35, 325 - offset)));
-         g2.fill(Create.arrowShape(new Point(445, 545 - offset), new Point(485, 545 - offset)));
-         g2.fill(Create.arrowShape(new Point(75, 545 - offset), new Point(35, 545 - offset)));
+         if (myNotebook.pageList.size() > 1) {
+            g2.fill(Create.arrowShape(new Point(445, 325 - offset), new Point(485, 325 - offset)));
+            g2.fill(Create.arrowShape(new Point(75, 325 - offset), new Point(35, 325 - offset)));
+         }
+         if (myMasterlist.seenlist.size() > 10) {
+            g2.fill(Create.arrowShape(new Point(445, 545 - offset), new Point(485, 545 - offset)));
+            g2.fill(Create.arrowShape(new Point(75, 545 - offset), new Point(35, 545 - offset)));
+         }
          g2.setColor(new Color(255, 239, 222));
 
          // draws a circle for each word in the answer
@@ -129,40 +134,96 @@ public class Main extends JPanel implements Runnable {
          int x = 0;
          while (x < SCREEN_WIDTH) {
             if (up || x < 200 || x > 300) {
-               Shape tree = Create.treeShape(x, 0, false);
-               objectHitboxes.add(tree.getBounds2D());
-               g2.fill(tree);
+               Shape rock = Create.rockShape(x, 0, false);
+               objectHitboxes.add(rock.getBounds2D());
+               g2.fill(rock);
             }
             if (down || x < 200 || x > 300) {
-               Shape tree = Create.treeShape(x, SCREEN_HEIGHT-40-100, false);
-               objectHitboxes.add(tree.getBounds2D());
-               g2.fill(tree);
+               Shape rock = Create.rockShape(x, SCREEN_HEIGHT-40-100, false);
+               objectHitboxes.add(rock.getBounds2D());
+               g2.fill(rock);
             }
             x += 40;
          }
 
-         int y = 0;
-         while (y < SCREEN_HEIGHT-100) {
+         int y = 40;
+         while (y < SCREEN_HEIGHT-100-50) {
             if (left || y < 200 || y > 300) {
-               Shape tree = Create.treeShape(0, y, false);
-               objectHitboxes.add(tree.getBounds2D());
-               g2.fill(tree);
+               Shape rock = Create.rockShape(0, y, false);
+               objectHitboxes.add(rock.getBounds2D());
+               g2.fill(rock);
             }
             if (right || y < 200 || y > 300) {
-               Shape tree = Create.treeShape(SCREEN_WIDTH-40, y, false);
-               objectHitboxes.add(tree.getBounds2D());
-               g2.fill(tree);
+               Shape rock = Create.rockShape(SCREEN_WIDTH-40, y, false);
+               objectHitboxes.add(rock.getBounds2D());
+               g2.fill(rock);
             }
 
             y += 40;
          }
 
          if (roomX == 0 && roomY == 0) {  // welcome room
-            // old guy who says "Toki!"
+            // old guy who says "Toki a!"
             Shape guyVar = Create.guyShape(240, 200, true);
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
-         } 
+         } else if (roomX == 0 && roomY == -1) { // big tree room
+            // big tree
+            Shape bigTree = Create.treeShape(260, 180, true, 4);
+            objectHitboxes.add(bigTree.getBounds2D());
+            g2.fill(bigTree);
+            
+            // big tree sign
+            Shape guyVar = Create.signShape(300, 285, true);
+            objectHitboxes.add(guyVar.getBounds2D());
+            g2.fill(guyVar);
+            
+            // small tree
+            Shape smallTree = Create.treeShape(100, 410, true);
+            objectHitboxes.add(smallTree.getBounds2D());
+            g2.fill(smallTree);
+            
+            // small tree guy
+            guyVar = Create.guyShape(140, 390, true);
+            objectHitboxes.add(guyVar.getBounds2D());
+            g2.fill(guyVar);
+         } else if (roomX == 0 && roomY == 1) { // many tree room
+            // trees but many
+            Shape tree1 = Create.treeShape(110, 100, true);
+            objectHitboxes.add(tree1.getBounds2D());
+            g2.fill(tree1);
+            Shape tree2 = Create.treeShape(301, 154, true);
+            objectHitboxes.add(tree2.getBounds2D());
+            g2.fill(tree2);
+            Shape tree3 = Create.treeShape(407, 401, true);
+            objectHitboxes.add(tree3.getBounds2D());
+            g2.fill(tree3);
+            Shape tree4 = Create.treeShape(173, 413, true);
+            objectHitboxes.add(tree4.getBounds2D());
+            g2.fill(tree4);
+            Shape tree5 = Create.treeShape(419, 104, true);
+            objectHitboxes.add(tree5.getBounds2D());
+            g2.fill(tree5);
+            Shape tree6 = Create.treeShape(358, 245, true);
+            objectHitboxes.add(tree6.getBounds2D());
+            g2.fill(tree6);
+            Shape tree7 = Create.treeShape(248, 401, true);
+            objectHitboxes.add(tree7.getBounds2D());
+            g2.fill(tree7);
+            Shape tree8 = Create.treeShape(270, 281, true);
+            objectHitboxes.add(tree8.getBounds2D());
+            g2.fill(tree8);
+            
+            // tree guy
+            Shape guyVar = Create.guyShape(120, 300, true);
+            objectHitboxes.add(guyVar.getBounds2D());
+            g2.fill(guyVar);
+         } else if (roomX == 1 && roomY == 1) {
+            // kids
+            Shape guyVar = Create.guyShape(120, 300, true);
+            objectHitboxes.add(guyVar.getBounds2D());
+            g2.fill(guyVar);
+         }
       }
    }
 
@@ -229,10 +290,29 @@ public class Main extends JPanel implements Runnable {
                objectHitboxes.clear();
             }
          }
-         if (roomX == 0 && roomY == 0) {
-            if (playerX > 170 && playerX < 310 && playerY > 130 && playerY < 270) { // old guy interact zone
+         if (roomX == 0 && roomY == 0) { // entrance room
+            if (playerX > 200 && playerX < 280 && playerY > 140 && playerY < 260) { // old guy interact zone
                interactable = true;
                currentEvent = 0;
+            } else {
+               interactable = false;
+            }
+         }
+         else if (roomX == 0 && roomY == -1) { // big tree room
+            if (playerX > 250 && playerX < 370 && playerY > 225 && playerY < 365) { // big tree sign interact zone
+               interactable = true;
+               currentEvent = 1;
+            } else if (playerX > 100 && playerX < 190 && playerY > 330 && playerY < 450) { // small tree guy interact zone
+               interactable = true;
+               currentEvent = 3;
+            } else {
+               interactable = false;
+            }
+         }
+         else if (roomX == 0 && roomY == 1) { // many tree room
+            if (playerX > 80 && playerX < 160 && playerY > 240 && playerY < 360) { // many tree guy interact zone
+               interactable = true;
+               currentEvent = 2;
             } else {
                interactable = false;
             }
