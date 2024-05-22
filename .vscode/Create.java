@@ -16,7 +16,7 @@ public class Create {
       arrowPolygon.addPoint(3, -1);
       arrowPolygon.addPoint(-6, -1);
 
-      Point midPoint = midpoint(fromPt, toPt);
+      Point midPoint = new Point((int) ((fromPt.x + toPt.x) / 2.0),(int) ((fromPt.y + toPt.y) / 2.0));
 
       double rotate = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
 
@@ -77,7 +77,6 @@ public class Create {
       return guyPolygon;
    }
 
-
    public static Shape rockShape(int x, int y, boolean middle) {
       int midX;
       int midY;
@@ -120,7 +119,6 @@ public class Create {
       }
       
       Polygon tree = new Polygon();
-
       tree.addPoint(midX, midY-20*size);
       tree.addPoint(midX-6*size, midY-18*size);
       tree.addPoint(midX-8*size, midY-15*size);
@@ -172,35 +170,79 @@ public class Create {
 
       return tree;
    }
-
-   private static Point midpoint(Point p1, Point p2) {
-      return new Point((int) ((p1.x + p2.x) / 2.0),
-            (int) ((p1.y + p2.y) / 2.0));
-   }
    
    public static Shape signShape(int x, int y, boolean middle) {
       return placeholder(x, y, middle);
    }
+   
    
    public static Shape fenceShape(int x, int y, boolean middle) {
       return placeholder(x, y, middle);
    }
    
    public static Shape horseShape(int x, int y, boolean middle) {
-      return placeholder(x, y, middle);
-   }
-   
-   public static Shape bunnyShape(int x, int y, boolean middle) {
       int midX;
       int midY;
+      int scale = 2;
       if (middle) {
          midX = x;
          midY = y;
       } else {
-         midX = x + 20;
-         midY = y + 20;
+         midX = x + 40;
+         midY = y + 40;
       }
-      return new Rectangle(midX-10, midY-10, 20, 20);
+
+      Polygon horse = new Polygon();
+      horse.addPoint(midX-20*scale, midY-4*scale);
+      horse.addPoint(midX-20*scale, midY+5*scale);
+      horse.addPoint(midX-18*scale, midY+18*scale);
+      horse.addPoint(midX-16*scale, midY+18*scale);
+      horse.addPoint(midX-17*scale, midY+7*scale);
+      horse.addPoint(midX-14*scale, midY+2*scale);
+      horse.addPoint(midX-13*scale, midY+4*scale);
+      
+      horse.addPoint(midX-15*scale, midY+9*scale);
+      horse.addPoint(midX-12*scale, midY+19*scale);
+      horse.addPoint(midX-10*scale, midY+19*scale);
+      horse.addPoint(midX-12*scale, midY+9*scale);
+      horse.addPoint(midX-10*scale, midY+2*scale);
+
+      horse.addPoint(midX-4*scale, midY+4*scale);
+      horse.addPoint(midX-scale, midY+4*scale);
+
+      horse.addPoint(midX, midY+13*scale);
+      horse.addPoint(midX-scale, midY+17*scale);
+      horse.addPoint(midX, midY+20*scale);
+      horse.addPoint(midX+2*scale, midY+20*scale);
+      horse.addPoint(midX+scale, midY+18*scale);
+      horse.addPoint(midX+2*scale, midY+6*scale);
+
+      horse.addPoint(midX+3*scale, midY+17*scale);
+      horse.addPoint(midX+4*scale, midY+20*scale);
+      horse.addPoint(midX+7*scale, midY+20*scale);
+      horse.addPoint(midX+4*scale, midY+16*scale);
+      horse.addPoint(midX+7*scale, midY+3*scale);
+
+      horse.addPoint(midX+8*scale, midY-5*scale);
+      horse.addPoint(midX+11*scale, midY-10*scale);
+      horse.addPoint(midX+14*scale, midY-9*scale);
+      horse.addPoint(midX+17*scale, midY-6*scale);
+      horse.addPoint(midX+20*scale, midY-7*scale);
+      horse.addPoint(midX+18*scale, midY-12*scale);
+      horse.addPoint(midX+17*scale, midY-17*scale);
+      horse.addPoint(midX+17*scale, midY-20*scale);
+      horse.addPoint(midX+15*scale, midY-17*scale);
+      horse.addPoint(midX+11*scale, midY-17*scale);
+      horse.addPoint(midX+8*scale, midY-15*scale);
+      
+      horse.addPoint(midX-scale, midY-11*scale);
+      horse.addPoint(midX-15*scale, midY-10*scale);
+
+      return horse;
+   }
+   
+   public static Shape lambShape(int x, int y, boolean middle) {
+      return placeholder(x, y, middle);
    }
    
    public static Shape placeholder(int x, int y, boolean middle) {
