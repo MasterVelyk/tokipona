@@ -174,7 +174,7 @@ public class Main extends JPanel implements Runnable {
             g2.fill(bigTree);
             
             // big tree sign
-            Shape guyVar = Create.signShape(300, 285, true);
+            Shape guyVar = Create.guyShape(300, 285, true);
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
             
@@ -188,6 +188,7 @@ public class Main extends JPanel implements Runnable {
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
          } else if (roomX == 0 && roomY == 1) { // many tree room
+
             // trees but many
             Shape tree1 = Create.treeShape(110, 100, true);
             objectHitboxes.add(tree1.getBounds2D());
@@ -218,11 +219,48 @@ public class Main extends JPanel implements Runnable {
             Shape guyVar = Create.guyShape(120, 300, true);
             objectHitboxes.add(guyVar.getBounds2D());
             g2.fill(guyVar);
-         } else if (roomX == 1 && roomY == 1) {
-            // kids
-            Shape guyVar = Create.guyShape(120, 300, true);
-            objectHitboxes.add(guyVar.getBounds2D());
-            g2.fill(guyVar);
+         } else if (roomX == -1 && roomY == -1) { // zoo room
+            // horizontal row
+            for (int i = 0; i < 6; i++) {
+               Shape fence = Create.fenceShape(50+(40*i), 170, false);
+               objectHitboxes.add(fence.getBounds2D());
+               g2.fill(fence);
+            }
+            // upper vertical
+            for (int i = 0; i < 4; i++) {
+               Shape fence = Create.fenceShape(290, 50+40*i, false);
+               objectHitboxes.add(fence.getBounds2D());
+               g2.fill(fence);
+            }
+            // lower vertical
+            for (int i = 0; i < 7; i++) {
+               Shape fence = Create.fenceShape(170, 210+40*i, false);
+               objectHitboxes.add(fence.getBounds2D());
+               g2.fill(fence);
+            }
+            // sheep
+            for (int i = 0; i < 3; i++) {
+               Shape sheep = Create.lambShape(60+60*i, 100, false);
+               objectHitboxes.add(sheep.getBounds2D());
+               g2.fill(sheep); 
+            }
+            // sign 1
+            Shape sign = Create.signShape(355, 190, true);
+            objectHitboxes.add(sign.getBounds2D());
+            g2.fill(sign);
+            // sign 2
+            sign = Create.signShape(235, 360, true);
+            objectHitboxes.add(sign.getBounds2D());
+            g2.fill(sign);
+         } else if (roomX == -1 && roomY == 0) { // horse room
+            // big horce
+            Shape horce = Create.horseShape(120, 220, true);
+            objectHitboxes.add(horce.getBounds2D());
+            g2.fill(horce);
+         } else if (roomX == -1 && roomY == 1) { // graveyard
+         } else if (roomX == 1 && roomY == -1) { // kids room
+         } else if (roomX == 1 && roomY == 0) { // food room
+         } else if (roomX == 1 && roomY == 1) { // no man room
          }
       }
    }
@@ -299,7 +337,7 @@ public class Main extends JPanel implements Runnable {
             }
          }
          else if (roomX == 0 && roomY == -1) { // big tree room
-            if (playerX > 250 && playerX < 370 && playerY > 225 && playerY < 365) { // big tree sign interact zone
+            if (playerX > 260 && playerX < 360 && playerY > 225 && playerY < 365) { // big tree guy interact zone
                interactable = true;
                currentEvent = 1;
             } else if (playerX > 100 && playerX < 190 && playerY > 330 && playerY < 450) { // small tree guy interact zone
@@ -317,7 +355,23 @@ public class Main extends JPanel implements Runnable {
                interactable = false;
             }
          }
+         else if (roomX == -1 && roomY == 0) { //horse room
 
+         }
+         else if (roomX == -1 && roomY == -1) { // zoo room
+            if (playerX > 305 && playerX < 405 && playerY > 130 && playerY < 250) { // soweli interact zone
+               interactable = true;
+               currentEvent = 4;
+            } else if (playerX > 185 && playerX < 285 && playerY > 300 && playerY < 420) { // ala soweli sign interact zone
+               interactable = true;
+               currentEvent = 5;
+            } else {
+               interactable = false;
+            }
+         }
+         else if (roomX == -1 && roomY == 1) {
+            
+         }
          // get the right dialogue
          if (interactable == true) {
             if (dialoguePanel.displayDialogue == false) {
