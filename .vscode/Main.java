@@ -76,14 +76,16 @@ public class Main extends JPanel implements Runnable {
          g2.drawImage(myNotebook.getPage(myNotebook.openPage).getImage(), 40, 130 - offset, 440, 200, null);
 
          // draws the arrows
+         g2.setColor(new Color(178, 128, 79));
          if (myNotebook.pageList.size() > 1) {
-            g2.setColor(new Color(178, 128, 79));
             g2.fill(Create.arrowShape(new Point(445, 325 - offset), new Point(485, 325 - offset)));
             g2.fill(Create.arrowShape(new Point(75, 325 - offset), new Point(35, 325 - offset)));
+         }
+         if (myMasterlist.seenlist.size() > 10) {
             g2.fill(Create.arrowShape(new Point(445, 545 - offset), new Point(485, 545 - offset)));
             g2.fill(Create.arrowShape(new Point(75, 545 - offset), new Point(35, 545 - offset)));
-            g2.setColor(new Color(255, 239, 222));
          }
+         g2.setColor(new Color(255, 239, 222));
 
          // draws a circle for each word in the answer
          if (myNotebook.getPage(myNotebook.openPage).completed == false) {
