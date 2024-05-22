@@ -47,6 +47,7 @@ public class Main extends JPanel implements Runnable {
       frame.addMouseListener(keyHandler);
       frame.addMouseMotionListener(keyHandler);
       frame.setFocusable(true);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.addWindowListener(
             new WindowAdapter() {
                public void windowClosing(WindowEvent e) {
@@ -131,6 +132,8 @@ public class Main extends JPanel implements Runnable {
          boolean up = (roomY == -1) ? true : false;
          boolean down = (roomY == 1) ? true : false;
          
+         g2.setColor(Color.DARK_GRAY);
+
          int x = 0;
          while (x < SCREEN_WIDTH) {
             if (up || x < 200 || x > 300) {
@@ -161,6 +164,8 @@ public class Main extends JPanel implements Runnable {
 
             y += 40;
          }
+
+         g2.setColor(Color.WHITE);
 
          if (roomX == 0 && roomY == 0) {  // welcome room
             // old guy who says "Toki a!"
@@ -254,10 +259,56 @@ public class Main extends JPanel implements Runnable {
             g2.fill(sign);
          } else if (roomX == -1 && roomY == 0) { // horse room
             // big horce
-            Shape horce = Create.horseShape(120, 220, true);
+            Shape horce = Create.eatingHorseShape(120, 220, true);
+            objectHitboxes.add(horce.getBounds2D());
+            g2.fill(horce);
+
+            // guy talking about big horse
+            horce = Create.guyShape(220, 180, true);
+            objectHitboxes.add(horce.getBounds2D());
+            g2.fill(horce);
+
+            // guy talking about big horse's eating habits
+            horce = Create.guyShape(220, 320, true);
             objectHitboxes.add(horce.getBounds2D());
             g2.fill(horce);
          } else if (roomX == -1 && roomY == 1) { // graveyard
+            // graves
+            Shape grave = Create.graveShape(394, 385, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+            grave = Create.graveShape(374, 211, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+            grave = Create.graveShape(122, 215, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+            grave = Create.graveShape(177, 300, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+            grave = Create.graveShape(460, 80, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+            
+            // dead guy guy
+            grave = Create.guyShape(215, 360, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+
+            // dead guy
+            grave = Create.deadGuyShape(235, 400, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+
+            // dead tree guy
+            grave = Create.guyShape(186, 122, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
+
+            // dead tree
+            grave = Create.deadTreeShape(226, 162, true);
+            objectHitboxes.add(grave.getBounds2D());
+            g2.fill(grave);
          } else if (roomX == 1 && roomY == -1) { // kids room
          } else if (roomX == 1 && roomY == 0) { // food room
          } else if (roomX == 1 && roomY == 1) { // no man room
@@ -356,7 +407,15 @@ public class Main extends JPanel implements Runnable {
             }
          }
          else if (roomX == -1 && roomY == 0) { //horse room
-
+            if (playerX > 170 && playerX < 270 && playerY > 120 && playerY < 240) { // big horse
+               interactable = true;
+               currentEvent = 8;
+            } else if (playerX > 170 && playerX < 270 && playerY > 260 && playerY < 380) { // eating horse
+               interactable = true;
+               currentEvent = 9;
+            } else {
+               interactable = false;
+            }
          }
          else if (roomX == -1 && roomY == -1) { // zoo room
             if (playerX > 305 && playerX < 405 && playerY > 130 && playerY < 250) { // soweli interact zone
@@ -369,7 +428,24 @@ public class Main extends JPanel implements Runnable {
                interactable = false;
             }
          }
-         else if (roomX == -1 && roomY == 1) {
+         else if (roomX == -1 && roomY == 1) { // graveyard
+            if (playerX > 165 && playerX < 265 && playerY > 300 && playerY < 420) { // dead guy guy
+               interactable = true;
+               currentEvent = 6;
+            } else if (playerX > 136 && playerX < 236 && playerY > 62 && playerY < 182) { // dead tree guy
+               interactable = true;
+               currentEvent = 7;
+            } else {
+               interactable = false;
+            }
+         }
+         else if (roomX == 1 && roomY == 0) { // children
+            
+         }
+         else if (roomX == 1 && roomY == -1) { // food
+            
+         }
+         else if (roomX == 1 && roomY == 1) { //no go place
             
          }
          // get the right dialogue
