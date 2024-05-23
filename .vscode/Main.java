@@ -59,7 +59,7 @@ public class Main extends JPanel implements Runnable {
       dialoguePanel.repaint();
    
       Graphics2D g2 = (Graphics2D) g;
-      g2.setColor(new Color(223, 189, 159));
+      g2.setColor(new Color(255, 230, 217));
       g2.fill(Create.guyShape(playerX, playerY, true));
       g2.setColor(Color.WHITE);
    
