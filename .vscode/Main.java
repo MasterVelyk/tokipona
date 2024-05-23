@@ -56,7 +56,7 @@ public class Main extends JPanel implements Runnable {
 
    public void paint(Graphics g) {
       super.paint(g);
-      dialoguePanel.repaint();
+      //dialoguePanel.repaint();
    
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(new Color(255, 230, 217));
@@ -525,8 +525,12 @@ public class Main extends JPanel implements Runnable {
             if (dialoguePanel.displayDialogue == false) {
                dialoguePanel.dialogueSentence = eventHandler.runEvent(currentEvent);
                dialoguePanel.displayDialogue = true;
+               dialoguePanel.repaint();
             }
          } else {
+            if (dialoguePanel.displayDialogue == true) {
+               dialoguePanel.repaint();
+            }
             dialoguePanel.displayDialogue = false;
          }
       
