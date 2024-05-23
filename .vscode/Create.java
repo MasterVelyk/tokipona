@@ -7,14 +7,14 @@ import java.awt.geom.AffineTransform;
 public class Create {
    // Creates 2 arrow-shaped Shapes, and returns them
    public static Shape arrowShape(Point fromPt, Point toPt) {
-      Polygon arrowPolygon = new Polygon();
-      arrowPolygon.addPoint(-6, 1);
-      arrowPolygon.addPoint(3, 1);
-      arrowPolygon.addPoint(3, 3);
-      arrowPolygon.addPoint(6, 0);
-      arrowPolygon.addPoint(3, -3);
-      arrowPolygon.addPoint(3, -1);
-      arrowPolygon.addPoint(-6, -1);
+      Polygon arrow = new Polygon();
+      arrow.addPoint(-6, 1);
+      arrow.addPoint(3, 1);
+      arrow.addPoint(3, 3);
+      arrow.addPoint(6, 0);
+      arrow.addPoint(3, -3);
+      arrow.addPoint(3, -1);
+      arrow.addPoint(-6, -1);
 
       Point midPoint = new Point((int) ((fromPt.x + toPt.x) / 2.0), (int) ((fromPt.y + toPt.y) / 2.0));
 
@@ -27,7 +27,7 @@ public class Create {
       transform.scale(scale, scale);
       transform.rotate(rotate);
 
-      return transform.createTransformedShape(arrowPolygon);
+      return transform.createTransformedShape(arrow);
    }
 
    public static Shape guyShape(Point point, boolean middle) {
@@ -52,41 +52,158 @@ public class Create {
          midY = y + 20;
       }
 
-      // head
-      Polygon guyPolygon = new Polygon();
-      guyPolygon.addPoint((int) (midX - scale), (int) (midY - 5 * scale));
-      guyPolygon.addPoint((int) (midX - 5 * scale), (int) (midY - 5 * scale));
-      guyPolygon.addPoint((int) (midX - 8 * scale), (int) (midY - 15 * scale));
+      Polygon guy = new Polygon();
+      guy.addPoint((int) (midX - scale), (int) (midY - 5 * scale));
+      guy.addPoint((int) (midX - 5 * scale), (int) (midY - 5 * scale));
+      guy.addPoint((int) (midX - 8 * scale), (int) (midY - 15 * scale));
 
-      guyPolygon.addPoint(midX, (int) (midY - 20 * scale));
+      guy.addPoint(midX, (int) (midY - 20 * scale));
 
-      guyPolygon.addPoint((int) (midX + 8 * scale), (int) (midY - 15 * scale));
-      guyPolygon.addPoint((int) (midX + 5 * scale), (int) (midY - 5 * scale));
-      guyPolygon.addPoint((int) (midX + scale), (int) (midY - 5 * scale));
+      guy.addPoint((int) (midX + 8 * scale), (int) (midY - 15 * scale));
+      guy.addPoint((int) (midX + 5 * scale), (int) (midY - 5 * scale));
+      guy.addPoint((int) (midX + scale), (int) (midY - 5 * scale));
 
       // left arm
-      guyPolygon.addPoint((int) (midX + scale), (int) (midY - scale));
-      guyPolygon.addPoint((int) (midX + 10 * scale), (int) (midY + 5 * scale));
-      guyPolygon.addPoint((int) (midX + scale), (int) (midY + scale));
+      guy.addPoint((int) (midX + scale), (int) (midY - 3 * scale));
+      guy.addPoint((int) (midX + 11 * scale), (int) (midY + 5 * scale));
+      guy.addPoint((int) (midX + 9 * scale), (int) (midY + 5 * scale));
+      guy.addPoint((int) (midX + scale), (int) (midY));
 
       // left leg
-      guyPolygon.addPoint((int) (midX + scale), (int) (midY + 9 * scale));
-      guyPolygon.addPoint((int) (midX + 10 * scale), (int) (midY + 20 * scale));
-      guyPolygon.addPoint(midX, (int) (midY + 11 * scale));
+      guy.addPoint((int) (midX + scale), (int) (midY + 5 * scale));
+      guy.addPoint((int) (midX + 11 * scale), (int) (midY + 20 * scale));
+      guy.addPoint((int) (midX + 9 * scale), (int) (midY + 20 * scale));
+      guy.addPoint(midX, (int) (midY + 7 * scale));
       // right leg
-      guyPolygon.addPoint((int) (midX - 10 * scale), (int) (midY + 20 * scale));
-      guyPolygon.addPoint((int) (midX - scale), (int) (midY + 9 * scale));
+      guy.addPoint((int) (midX - 9 * scale), (int) (midY + 20 * scale));
+      guy.addPoint((int) (midX - 11 * scale), (int) (midY + 20 * scale));
+      guy.addPoint((int) (midX - scale), (int) (midY + 5 * scale));
 
       // right arm
-      guyPolygon.addPoint((int) (midX - scale), (int) (midY - scale));
-      guyPolygon.addPoint((int) (midX - 10 * scale), (int) (midY + 5 * scale));
-      guyPolygon.addPoint((int) (midX - scale), (int) (midY + scale));
+      guy.addPoint((int) (midX - scale), (int) (midY - 3 * scale));
+      guy.addPoint((int) (midX - 11 * scale), (int) (midY + 5 * scale));
+      guy.addPoint((int) (midX - 9 * scale), (int) (midY + 5 * scale));
+      guy.addPoint((int) (midX - scale), (int) (midY));
 
-      return guyPolygon;
+      return guy;
    }
 
    public static Shape deadGuyShape(int x, int y, boolean middle) {
-      return guyShape(x, y, middle);
+      int midX, midY;
+      if (middle) {
+         midX = x;
+         midY = y;
+      } else {
+         midX = x + 20;
+         midY = y + 20;
+      }
+
+      Polygon guy = new Polygon();
+      guy.addPoint(midX - 6, midY - 1);
+      guy.addPoint(midX - 6, midY - 5);
+      guy.addPoint(midX - 15, midY - 8);
+
+      guy.addPoint(midX - 20, midY);
+
+      guy.addPoint(midX - 15, midY + 8);
+      guy.addPoint(midX - 6, midY + 5);
+      guy.addPoint(midX - 6, midY - 1);
+      guy.addPoint(midX - 3, midY - 1);
+
+      // left arm
+      guy.addPoint(midX - 3, midY + 1);
+      guy.addPoint(midX + 5, midY + 11);
+      guy.addPoint(midX + 5, midY + 9);
+      guy.addPoint(midX, midY + 1);
+
+      // left leg
+      guy.addPoint(midX + 5, midY + 1);
+      guy.addPoint(midX + 20, midY + 11);
+      guy.addPoint(midX + 20, midY + 9);
+      guy.addPoint(midX + 7, midY);
+      // right leg
+      guy.addPoint(midX + 20, midY - 9);
+      guy.addPoint(midX + 20, midY - 11);
+      guy.addPoint(midX + 5, midY - 1);
+
+      // right arm
+      guy.addPoint(midX - 3, midY - 1);
+      guy.addPoint(midX + 5, midY - 11);
+      guy.addPoint(midX + 5, midY - 9);
+      guy.addPoint(midX, midY - 1);
+
+      return guy;
+   }
+
+   public static Shape eatGuyShape(int x, int y, boolean middle) {
+      return eatGuyShape(x, y, middle, 1);    
+   }
+
+   public static Shape eatGuyShape(int x, int y, boolean middle, int foodScale) {
+      int midX, midY;
+      if (middle) {
+         midX = x;
+         midY = y;
+      } else {
+         midX = x + 20;
+         midY = y + 20;
+      }
+
+      Polygon guy = new Polygon();
+      guy.addPoint(midX - 1, midY - 5);
+      guy.addPoint(midX - 5, midY - 5);
+      guy.addPoint(midX - 8, midY - 15);
+
+      guy.addPoint(midX, midY - 20);
+
+      guy.addPoint(midX + 8, midY - 15);
+      guy.addPoint(midX + 6, midY - 10);
+      guy.addPoint(midX + 2, midY - 10);
+      guy.addPoint(midX + 5, midY - 5);
+      guy.addPoint(midX + 1, midY - 5);
+
+      // left arm
+      guy.addPoint(midX + 1, midY - 3);
+
+      // food item (foodScale l8r)
+      guy.addPoint(midX + 9 * foodScale - foodScale * 2, midY + 4 * foodScale + foodScale);
+      guy.addPoint(midX + 8 * foodScale - foodScale * 2, midY - 6 * foodScale + foodScale);
+      guy.addPoint(midX + 8 * foodScale - foodScale * 2, midY - 8 * foodScale + foodScale);
+      guy.addPoint(midX + 10 * foodScale - foodScale * 2, midY - 10 * foodScale + foodScale);
+      guy.addPoint(midX + 12 * foodScale - foodScale * 2, midY - 8 * foodScale + foodScale);
+      guy.addPoint(midX + 12 * foodScale - foodScale * 2, midY - 6 * foodScale + foodScale);
+
+      guy.addPoint(midX + 11 * foodScale - foodScale * 2, midY - 4 * foodScale + foodScale);
+      guy.addPoint(midX + 11 * foodScale - foodScale * 2, midY - 2 * foodScale + foodScale);
+      
+      guy.addPoint(midX + 12 * foodScale - foodScale * 2, midY - 1 * foodScale + foodScale);
+      guy.addPoint(midX + 12 * foodScale - foodScale * 2, midY * foodScale + foodScale);
+      guy.addPoint(midX + 10 * foodScale - foodScale * 2, midY - 2 * foodScale + foodScale);
+      guy.addPoint(midX + 8 * foodScale - foodScale * 2, midY * foodScale + foodScale);
+      guy.addPoint(midX + 8 * foodScale - foodScale * 2, midY - 1 * foodScale + foodScale);
+      
+      guy.addPoint(midX+ 9 * foodScale - foodScale * 2, midY - 2 * foodScale + foodScale);
+
+      guy.addPoint(midX + 9 * foodScale - foodScale * 2, midY - 3 * foodScale + foodScale);
+      guy.addPoint(midX + 1, midY);
+
+      // left leg
+      guy.addPoint(midX + 1, midY + 5);
+      guy.addPoint(midX + 11, midY + 20);
+      guy.addPoint(midX + 9, midY + 20);
+      guy.addPoint(midX, midY + 7);
+      // right leg
+      guy.addPoint(midX - 9, midY + 20);
+      guy.addPoint(midX - 11, midY + 20);
+      guy.addPoint(midX - 1, midY + 5);
+
+      // right arm
+      guy.addPoint(midX - 1, midY - 3);
+      guy.addPoint(midX - 11, midY + 5);
+      guy.addPoint(midX - 9, midY + 5);
+      guy.addPoint(midX - 1, midY);
+
+      return guy;
    }
 
    public static Shape rockShape(int x, int y, boolean middle) {
