@@ -452,7 +452,57 @@ public class Create {
    }
 
    public static Shape lambShape(int x, int y, boolean middle) {
-      return placeholder(x, y, middle);
+      int midX;
+      int midY;
+      if (middle) {
+         midX = x;
+         midY = y;
+      } else {
+         midX = x + 19;
+         midY = y + 19;
+      }
+
+      Polygon lamb = new Polygon();
+      lamb.addPoint(midX+6, midY-11);
+      lamb.addPoint(midX+7, midY-15);
+      lamb.addPoint(midX+3, midY-17);
+      lamb.addPoint(midX+2, midY-20);
+      lamb.addPoint(midX+6, midY-19);
+      lamb.addPoint(midX+14, midY-18);
+      lamb.addPoint(midX+18, midY-20);
+      lamb.addPoint(midX+20, midY-20);
+      lamb.addPoint(midX+18, midY-17);
+      lamb.addPoint(midX+16, midY-16);
+      lamb.addPoint(midX+14, midY-5);
+
+      lamb.addPoint(midX+9, midY+4);
+      lamb.addPoint(midX+8, midY+15);
+      lamb.addPoint(midX+9, midY+16);
+      lamb.addPoint(midX+6, midY+17);
+      lamb.addPoint(midX+8, midY+20);
+      lamb.addPoint(midX+5, midY+20);
+      lamb.addPoint(midX+3, midY+17);
+      lamb.addPoint(midX+2, midY+8);
+      lamb.addPoint(midX, midY+3);
+      
+      lamb.addPoint(midX-6, midY+2);
+      lamb.addPoint(midX-8, midY+6);
+      lamb.addPoint(midX-9, midY+8);
+      lamb.addPoint(midX-6, midY+18);
+      lamb.addPoint(midX-8, midY+19);
+      lamb.addPoint(midX-14, midY+10);
+      lamb.addPoint(midX-16, midY+12);
+      lamb.addPoint(midX-16, midY+20);
+      lamb.addPoint(midX-19, midY+20);
+      lamb.addPoint(midX-20, midY+12);
+      lamb.addPoint(midX-18, midY+5);
+      lamb.addPoint(midX-20, midY+6);
+      lamb.addPoint(midX-20, midY-4);
+      lamb.addPoint(midX-17, midY-9);
+
+      lamb.addPoint(midX-11, midY-11);
+
+      return lamb;
    }
 
    public static Shape graveShape(int x, int y, boolean middle) {
