@@ -167,152 +167,127 @@ public class Main extends JPanel implements Runnable {
 
          g2.setColor(Color.WHITE);
 
+         ArrayList<Shape> shape = new ArrayList<Shape>();
          if (roomX == 0 && roomY == 0) {  // welcome room
             // old guy who says "Toki a!"
-            Shape guyVar = Create.guyShape(240, 200, true);
-            objectHitboxes.add(guyVar.getBounds2D());
-            g2.fill(guyVar);
+            shape.add(Create.guyShape(240, 200, true));
+            g2.fill(shape.get(shape.size()-1));
          } else if (roomX == 0 && roomY == -1) { // big tree room
             // big tree
-            Shape bigTree = Create.treeShape(260, 180, true, 4);
-            objectHitboxes.add(bigTree.getBounds2D());
-            g2.fill(bigTree);
-            
-            // big tree sign
-            Shape guyVar = Create.guyShape(300, 285, true);
-            objectHitboxes.add(guyVar.getBounds2D());
-            g2.fill(guyVar);
-            
-            // small tree
-            Shape smallTree = Create.treeShape(100, 410, true);
-            objectHitboxes.add(smallTree.getBounds2D());
-            g2.fill(smallTree);
-            
-            // small tree guy
-            guyVar = Create.guyShape(140, 390, true);
-            objectHitboxes.add(guyVar.getBounds2D());
-            g2.fill(guyVar);
-         } else if (roomX == 0 && roomY == 1) { // many tree room
+            shape.add(Create.treeShape(260, 180, true, 4));
+            g2.fill(shape.get(shape.size()-1));
 
+            // big tree sign
+            shape.add(Create.guyShape(300, 285, true));
+            g2.fill(shape.get(shape.size()-1));
+
+            // small tree
+            shape.add(Create.treeShape(100, 410, true));
+            g2.fill(shape.get(shape.size()-1));
+
+            // small tree guy
+            shape.add(Create.guyShape(140, 390, true));
+            g2.fill(shape.get(shape.size()-1));
+         } else if (roomX == 0 && roomY == 1) { // many tree room
             // trees but many
-            Shape tree1 = Create.treeShape(110, 100, true);
-            objectHitboxes.add(tree1.getBounds2D());
-            g2.fill(tree1);
-            Shape tree2 = Create.treeShape(301, 154, true);
-            objectHitboxes.add(tree2.getBounds2D());
-            g2.fill(tree2);
-            Shape tree3 = Create.treeShape(407, 401, true);
-            objectHitboxes.add(tree3.getBounds2D());
-            g2.fill(tree3);
-            Shape tree4 = Create.treeShape(173, 413, true);
-            objectHitboxes.add(tree4.getBounds2D());
-            g2.fill(tree4);
-            Shape tree5 = Create.treeShape(419, 104, true);
-            objectHitboxes.add(tree5.getBounds2D());
-            g2.fill(tree5);
-            Shape tree6 = Create.treeShape(358, 245, true);
-            objectHitboxes.add(tree6.getBounds2D());
-            g2.fill(tree6);
-            Shape tree7 = Create.treeShape(248, 401, true);
-            objectHitboxes.add(tree7.getBounds2D());
-            g2.fill(tree7);
-            Shape tree8 = Create.treeShape(270, 281, true);
-            objectHitboxes.add(tree8.getBounds2D());
-            g2.fill(tree8);
+            int[][] xyTree = {{110,100}, {301,154}, {407,401}, {173,413}, {419,104}, {358,245}, {248,401}, {270,281}};
+            g2.setColor(Color.LIGHT_GRAY);
+            for (int[] xy : xyTree) {
+               shape.add(Create.treeShape(xy[0], xy[1], true));
+               g2.fill(shape.get(shape.size()-1));
+            }
+            g2.setColor(Color.WHITE);
             
             // tree guy
-            Shape guyVar = Create.guyShape(120, 300, true);
-            objectHitboxes.add(guyVar.getBounds2D());
-            g2.fill(guyVar);
+            shape.add(Create.guyShape(120, 300, true));
+            g2.fill(shape.get(shape.size()-1));
          } else if (roomX == -1 && roomY == -1) { // zoo room
             // horizontal row
+            g2.setColor(Color.LIGHT_GRAY);
             for (int i = 0; i < 6; i++) {
-               Shape fence = Create.fenceShape(50+(40*i), 170, false);
-               objectHitboxes.add(fence.getBounds2D());
-               g2.fill(fence);
+               shape.add(Create.fenceShape(50+(40*i), 170, false));
+               g2.fill(shape.get(shape.size()-1));
             }
             // upper vertical
             for (int i = 0; i < 4; i++) {
-               Shape fence = Create.fenceShape(290, 50+40*i, false);
-               objectHitboxes.add(fence.getBounds2D());
-               g2.fill(fence);
+               shape.add(Create.fenceShape(290, 50+40*i, false));
+               g2.fill(shape.get(shape.size()-1));
             }
             // lower vertical
             for (int i = 0; i < 7; i++) {
-               Shape fence = Create.fenceShape(170, 210+40*i, false);
-               objectHitboxes.add(fence.getBounds2D());
-               g2.fill(fence);
+               shape.add(Create.fenceShape(170, 210+40*i, false));
+               g2.fill(shape.get(shape.size()-1));
             }
+            g2.setColor(Color.WHITE);
+
             // sheep
-            for (int i = 0; i < 3; i++) {
-               Shape sheep = Create.lambShape(60+60*i, 100, false);
-               objectHitboxes.add(sheep.getBounds2D());
-               g2.fill(sheep); 
+            int[][] xySheep = {{70,95}, {140,90}, {200,105}, {106,59}, {246,76}};
+            for (int[] xy : xySheep) {
+               shape.add(Create.lambShape(xy[0], xy[1], false));
+               g2.fill(shape.get(shape.size()-1)); 
             }
+
             // sign 1
-            Shape sign = Create.signShape(355, 190, true);
-            objectHitboxes.add(sign.getBounds2D());
-            g2.fill(sign);
+            shape.add(Create.signShape(355, 190, true));
+            g2.fill(shape.get(shape.size()-1));
             // sign 2
-            sign = Create.signShape(235, 360, true);
-            objectHitboxes.add(sign.getBounds2D());
-            g2.fill(sign);
+            shape.add(Create.signShape(235, 360, true));
+            g2.fill(shape.get(shape.size()-1));
          } else if (roomX == -1 && roomY == 0) { // horse room
             // big horce
-            Shape horce = Create.eatingHorseShape(120, 220, true);
-            objectHitboxes.add(horce.getBounds2D());
-            g2.fill(horce);
+            shape.add(Create.eatingHorseShape(120, 220, true));
+            g2.fill(shape.get(shape.size()-1));
 
             // guy talking about big horse
-            horce = Create.guyShape(220, 180, true);
-            objectHitboxes.add(horce.getBounds2D());
-            g2.fill(horce);
+            shape.add(Create.guyShape(220, 180, true));
+            g2.fill(shape.get(shape.size()-1));
 
             // guy talking about big horse's eating habits
-            horce = Create.guyShape(220, 320, true);
-            objectHitboxes.add(horce.getBounds2D());
-            g2.fill(horce);
+            shape.add(Create.guyShape(220, 320, true));
+            g2.fill(shape.get(shape.size()-1));
          } else if (roomX == -1 && roomY == 1) { // graveyard
             // graves
-            Shape grave = Create.graveShape(394, 385, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
-            grave = Create.graveShape(374, 211, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
-            grave = Create.graveShape(122, 215, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
-            grave = Create.graveShape(177, 300, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
-            grave = Create.graveShape(460, 80, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
+            g2.setColor(Color.LIGHT_GRAY);
+            int[][] xyGrave = {{394,385}, {374,211}, {122,215}, {177,300}, {460,80}};
+            for (int[] xy : xyGrave) {
+               shape.add(Create.graveShape(xy[0], xy[1], true));
+               g2.fill(shape.get(shape.size()-1));
+            }
+            g2.setColor(Color.WHITE);
             
             // dead guy guy
-            grave = Create.guyShape(215, 360, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
+            shape.add(Create.guyShape(215, 360, true));
+            g2.fill(shape.get(shape.size()-1));
 
             // dead guy
-            grave = Create.deadGuyShape(235, 400, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
+            shape.add(Create.deadGuyShape(235, 400, true));
+            g2.fill(shape.get(shape.size()-1));
 
             // dead tree guy
-            grave = Create.guyShape(186, 122, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
+            shape.add(Create.guyShape(186, 122, true));
+            g2.fill(shape.get(shape.size()-1));
 
             // dead tree
-            grave = Create.deadTreeShape(226, 162, true);
-            objectHitboxes.add(grave.getBounds2D());
-            g2.fill(grave);
+            shape.add(Create.deadTreeShape(226, 162, true));
+            g2.fill(shape.get(shape.size()-1));
+
+            // live tree
+            int[][] xyTree = {{80, 80}, {75, 395}, {128,455}, {445,455}};
+            g2.setColor(Color.LIGHT_GRAY);
+            for (int[] xy : xyTree) {
+               shape.add(Create.treeShape(xy[0], xy[1], true));
+               g2.fill(shape.get(shape.size()-1));
+            }
+            g2.setColor(Color.WHITE);
          } else if (roomX == 1 && roomY == -1) { // kids room
          } else if (roomX == 1 && roomY == 0) { // food room
          } else if (roomX == 1 && roomY == 1) { // no man room
          }
+
+         for (Shape s : shape) {
+            objectHitboxes.add(s.getBounds2D());
+         }
+         shape.clear();
       }
    }
 
