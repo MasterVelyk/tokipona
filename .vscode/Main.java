@@ -6,33 +6,37 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Main extends JPanel implements Runnable {
+      // screen variables
    protected static final int SCREEN_WIDTH = 520;
    protected static final int SCREEN_HEIGHT = 620;
+      // player variables
    private int playerX = 240;
    private int playerY = 300;
    private int playerSpeed = 10;
+      // event variables
    private int roomX = 0;
    private int roomY = 0;
+   private boolean interactable = false;
+   private int currentEvent;
+   private ArrayList<Rectangle2D> objectHitboxes = new ArrayList<Rectangle2D>();
+      // initializes class vars + similar
    private Notebook myNotebook = new Notebook();
    private Masterlist myMasterlist = new Masterlist();
    private EventHandler eventHandler = new EventHandler(myMasterlist, myNotebook);
-   private boolean interactable = false;
-   private int currentEvent;
    private DialoguePanel dialoguePanel = new DialoguePanel();
-   private ArrayList<Rectangle2D> objectHitboxes = new ArrayList<Rectangle2D>();
-
-   private Thread gameThread;
    private KeyHandler keyHandler = new KeyHandler();
+   private Thread gameThread;
 
    public Main() {
       startGameThread();
+
+         // draws primary GUI
       JFrame frame = new JFrame("ma pona");
       frame.add(this, BorderLayout.CENTER);
       frame.add(dialoguePanel, BorderLayout.SOUTH);
@@ -56,7 +60,6 @@ public class Main extends JPanel implements Runnable {
 
    public void paint(Graphics g) {
       super.paint(g);
-      //dialoguePanel.repaint();
    
       Graphics2D g2 = (Graphics2D) g;
       g2.setColor(new Color(255, 230, 217));
@@ -403,6 +406,7 @@ public class Main extends JPanel implements Runnable {
 
    public void update() {
       if (keyHandler.notebookOpen == false) {
+         // moves the player character
          if (keyHandler.upPressed == true) {
             playerY -= playerSpeed;
             if (playerY <= 0) {
@@ -435,6 +439,8 @@ public class Main extends JPanel implements Runnable {
                objectHitboxes.clear();
             }
          }
+         
+         // defines interact zones in each room
          if (roomX == 0 && roomY == 0) { // entrance room
             if (playerX > 200 && playerX < 280 && playerY > 140 && playerY < 260) { // old guy interact zone
                interactable = true;
@@ -446,8 +452,7 @@ public class Main extends JPanel implements Runnable {
             if (playerX > 260 && playerX < 360 && playerY > 225 && playerY < 365) { // big tree guy interact zone
                interactable = true;
                currentEvent = 1;
-            } else if (playerX > 100 && playerX < 190 && playerY > 330 && playerY < 450) { // small tree guy interact
-                                                                                           // zone
+            } else if (playerX > 100 && playerX < 190 && playerY > 330 && playerY < 450) { // small tree guy interact zone
                interactable = true;
                currentEvent = 3;
             } else {
@@ -520,7 +525,7 @@ public class Main extends JPanel implements Runnable {
             }
          }
       
-         // get the right dialogue
+            // get the right dialogue
          if (interactable == true) {
             if (dialoguePanel.displayDialogue == false) {
                dialoguePanel.dialogueSentence = eventHandler.runEvent(currentEvent);
@@ -537,11 +542,13 @@ public class Main extends JPanel implements Runnable {
          // push out of obstcles
          boolean inShape = false;
          Rectangle2D playerBox = Create.guyShape(playerX, playerY, true).getBounds2D();
+            // detects if the user is hitting an object
          for (int i = 0; i < objectHitboxes.size(); i++) {
             if (playerBox.intersects(objectHitboxes.get(i))) {
                inShape = true;
             }
          }
+            // prevents the player from walking through the object
          if (inShape) {
             if (keyHandler.upPressed) {
                playerY += playerSpeed;
@@ -557,6 +564,7 @@ public class Main extends JPanel implements Runnable {
             }
          }
       } else {
+            // checks if you can guess any more words for the current notebook page
          if (keyHandler.checkValid == true) {
             for (int i = 0; i < keyHandler.guessList.size(); i++) {
                if (myMasterlist.seenlist.size() < keyHandler.guessList.get(i).intValue()) {
@@ -566,6 +574,7 @@ public class Main extends JPanel implements Runnable {
             }
             keyHandler.checkValid = false;
          }
+            // checks if the current guess is correct
          if (keyHandler.checkGuess == true) {
             ArrayList<Word> tempGuessList = new ArrayList<Word>();
             for (int i = 0; i < keyHandler.guessList.size(); i++) {
@@ -576,6 +585,7 @@ public class Main extends JPanel implements Runnable {
             keyHandler.checkGuess = false;
             keyHandler.clearGuessList();
          }
+            // changes notebook page
          if (keyHandler.changePage == 1) {
             if (myNotebook.openPage + 1 < myNotebook.pageList.size()) {
                myNotebook.openPage += 1;
@@ -589,6 +599,7 @@ public class Main extends JPanel implements Runnable {
             }
             keyHandler.changePage = 0;
          }
+            // changes page of vocabulary words
          if (keyHandler.changeNodePage == 1) {
             if ((keyHandler.nodePage + 1) * 14 < myMasterlist.seenlist.size()) {
                keyHandler.nodePage += 1;
