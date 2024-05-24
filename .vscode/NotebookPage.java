@@ -13,7 +13,7 @@ public class NotebookPage {
 
     public NotebookPage(Sentence ans, String image) {
         try {
-            img = ImageIO.read(getClass().getResource("/images/" + image + ".png"));
+            img = ImageIO.read(getClass().getResource("/images/" + image + ".jpg"));
         } catch (IOException e) {
         }
         imageID = image;
@@ -21,6 +21,8 @@ public class NotebookPage {
     }
 
     public NotebookPage() {
+            // only runs when the user hasn't seen any words
+            // displays a transparent image (nothing) because the user hasn't seen any vocabulary with pages yet
         try {
             img = ImageIO.read(getClass().getResource("/images/transparent.png"));
         } catch (IOException e) {
